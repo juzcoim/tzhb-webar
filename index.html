@@ -43,6 +43,7 @@
         <video id="video-shamsa" src="./assets/videos/video-01-shamsa.mp4" preload="auto" loop="true" playsinline webkit-playsinline muted crossorigin="anonymous"></video>
         <video id="video-islimi" src="./assets/videos/video-02-islimi.mp4" preload="auto" loop="true" playsinline webkit-playsinline muted crossorigin="anonymous"></video>
         <video id="video-zarkari" src="./assets/videos/video-03-zarkari.mp4" preload="auto" loop="true" playsinline webkit-playsinline muted crossorigin="anonymous"></video>
+        <video id="video-charpar" src="./assets/videos/video-04-charpar.mp4" preload="auto" loop="true" playsinline webkit-playsinline muted crossorigin="anonymous"></video>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -60,6 +61,11 @@
       <!-- Target 2: Plate III - Zarkari Illumination Masterwork -->
       <a-entity mindar-image-target="targetIndex: 2" tazheeb-target-listener data-target-index="2">
         <a-plane src="#video-zarkari" position="0 0 0" height="1" width="1" rotation="0 0 0" material="opacity: 0.98; shader: flat"></a-plane>
+      </a-entity>
+
+      <!-- Target 3: Plate IV - Charpar Floral Motif -->
+      <a-entity mindar-image-target="targetIndex: 3" tazheeb-target-listener data-target-index="3">
+        <a-plane src="#video-charpar" position="0 0 0" height="1" width="1" rotation="0 0 0" material="opacity: 0.98; shader: flat"></a-plane>
       </a-entity>
     </a-scene>
   </div>

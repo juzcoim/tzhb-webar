@@ -16,7 +16,8 @@ const { handleStaticRequest } = require('./server');
 const VIDEOS = [
   'video-01-shamsa.mp4',
   'video-02-islimi.mp4',
-  'video-03-zarkari.mp4'
+  'video-03-zarkari.mp4',
+  'video-04-charpar.mp4'
 ];
 
 function mockRequest(url, headers = {}) {

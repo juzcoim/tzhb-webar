@@ -44,6 +44,16 @@
         arabic: 'زرکاری و لاجورد',
         description: 'Agate burnishing for mirror gloss gold finish and genuine Afghan lapis lazuli pigment application.',
         videoId: 'video-zarkari'
+      },
+      {
+        index: 3,
+        id: 'plate-04',
+        title: 'Plate IV: Charpar Floral Motif',
+        chapter: 'Chapter IV: Floral Geometry & Cornerpieces',
+        lesson: 'Master Lesson 4.1',
+        arabic: 'طرح چهارپر',
+        description: 'Four-petal symmetrical floral geometry (charpar), corner quadrant composition, and gold embellishment.',
+        videoId: 'video-charpar'
       }
     ]
   };

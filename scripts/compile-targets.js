@@ -14,7 +14,8 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const PLATES = [
   path.join(ROOT_DIR, 'assets', 'plates', 'plate-01-shamsa.png'),
   path.join(ROOT_DIR, 'assets', 'plates', 'plate-02-islimi.png'),
-  path.join(ROOT_DIR, 'assets', 'plates', 'plate-03-zarkari.png')
+  path.join(ROOT_DIR, 'assets', 'plates', 'plate-03-zarkari.png'),
+  path.join(ROOT_DIR, 'assets', 'plates', 'plate-04-charpar.png')
 ];
 const TARGET_OUTPUT = path.join(ROOT_DIR, 'assets', 'targets', 'targets.mind');
 const CHROME_PATH = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -56,7 +57,7 @@ if (match) {
         workerCode = decoded;
         break;
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 }
 
@@ -71,6 +72,7 @@ const trackingFuncs = workerCode
 
 // 4. Generate standalone runner HTML
 const runnerHtmlPath = path.join(ROOT_DIR, '.compile-runner.html');
+const imageLoaders = imgDataUris.map(uri => `        loadImage("${uri}")`).join(',\n');
 
 const runnerHtml = `<!DOCTYPE html>
 <html lang="en">
@@ -112,13 +114,11 @@ const runnerHtml = `<!DOCTYPE html>
 
   async function compileAll() {
     try {
-      log("Loading target images into memory...");
+      log("Loading " + ${imgDataUris.length} + " target images into memory...");
       const images = await Promise.all([
-        loadImage("${imgDataUris[0]}"),
-        loadImage("${imgDataUris[1]}"),
-        loadImage("${imgDataUris[2]}")
+${imageLoaders}
       ]);
-      log("Loaded 3 plates: 1024x1024.");
+      log("Loaded " + images.length + " plates successfully.");
 
       const compiler = new Compiler();
 
@@ -178,7 +178,7 @@ const userDataDir = path.join('/tmp', `chrome-mindar-${Date.now()}`);
 
 try {
   const chromeCmd = `"${CHROME_PATH}" --headless=new --no-sandbox --allow-file-access-from-files --disable-web-security --disable-component-update --disable-background-networking --disable-sync --disable-default-apps --user-data-dir="${userDataDir}" --virtual-time-budget=180000 --dump-dom "file://${runnerHtmlPath}"`;
-  
+
   const stdout = execSync(chromeCmd, {
     stdio: ['pipe', 'pipe', 'ignore'],
     maxBuffer: 50 * 1024 * 1024
@@ -216,7 +216,7 @@ try {
   if (fs.existsSync(runnerHtmlPath)) fs.unlinkSync(runnerHtmlPath);
   try {
     if (fs.existsSync(userDataDir)) fs.rmSync(userDataDir, { recursive: true, force: true });
-  } catch (e) {}
+  } catch (e) { }
 }
 
 console.log('\n✅ MindAR target compilation pipeline completed successfully!\n');
