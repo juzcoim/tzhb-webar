@@ -31,7 +31,7 @@
   <!-- WebAR 3D Tracking Scene -->
   <div id="ar-viewport">
     <a-scene
-      mindar-image="imageTargetSrc: ./assets/targets/targets.mind; autoStart: true; uiLoading: no; uiScanning: no; warmupTolerance: 1; missTolerance: 8;"
+      mindar-image="imageTargetSrc: ./assets/targets/targets.mind; autoStart: true; uiLoading: no; uiScanning: no; filterMinCF: 0.001; filterBeta: 10; warmupTolerance: 2; missTolerance: 35;"
       color-space="sRGB"
       embedded
       renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true"

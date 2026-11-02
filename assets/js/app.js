@@ -154,11 +154,42 @@
     });
   }
 
+  // Debounce Grace Window for Target Tracking (prevents flickering during minor hand motion)
+  let lostDebounceTimer = null;
+  const GRACE_PERIOD_MS = 1400; // 1.4-second grace window before pausing AR content
+
   /**
    * Handler when a MindAR image target is detected
    */
   function onTargetFound(targetIndex) {
-    console.log(`[Tazheeb AR] Target found: index ${targetIndex}`);
+    // 1. If there is a pending teardown timer from a momentary jitter, cancel it immediately!
+    if (lostDebounceTimer) {
+      clearTimeout(lostDebounceTimer);
+      lostDebounceTimer = null;
+    }
+
+    // 2. If already locked onto this exact target, DO NOT re-initialize, re-chime, or restart video!
+    if (state.isTargetLocked && state.currentTargetIndex === targetIndex) {
+      const plate = state.plates[targetIndex];
+      if (plate) {
+        const video = document.getElementById(plate.videoId);
+        if (video && video.paused) {
+          video.play().catch(() => {});
+        }
+      }
+      return;
+    }
+
+    // 3. If switching from another active target, pause the previous one cleanly
+    if (state.currentTargetIndex !== null && state.currentTargetIndex !== targetIndex) {
+      const prevPlate = state.plates[state.currentTargetIndex];
+      if (prevPlate) {
+        const prevVideo = document.getElementById(prevPlate.videoId);
+        if (prevVideo) prevVideo.pause();
+      }
+    }
+
+    console.log(`[Tazheeb AR] Target locked: index ${targetIndex}`);
     state.currentTargetIndex = targetIndex;
     state.isTargetLocked = true;
     const plate = state.plates[targetIndex] || state.plates[0];
@@ -184,10 +215,10 @@
       dom.targetCard.classList.add('visible');
     }
 
-    // 3. Play Chime
+    // 3. Play Chime once on initial target acquisition
     playChime();
 
-    // 4. Play Corresponding Video Overlay
+    // 4. Play Corresponding Video Overlay smoothly (never reset currentTime)
     const video = document.getElementById(plate.videoId);
     if (video) {
       video.muted = !state.isAudioEnabled;
@@ -204,41 +235,53 @@
   }
 
   /**
-   * Handler when MindAR loses image tracking
+   * Handler when MindAR loses image tracking.
+   * Debounced with a grace window so quick movements or tilt don't flicker.
    */
   function onTargetLost(targetIndex) {
-    console.log(`[Tazheeb AR] Target lost: index ${targetIndex}`);
-    if (state.currentTargetIndex === targetIndex) {
-      state.currentTargetIndex = null;
-      state.isTargetLocked = false;
+    // If not the current target, ignore
+    if (state.currentTargetIndex !== targetIndex) return;
+
+    if (lostDebounceTimer) {
+      clearTimeout(lostDebounceTimer);
     }
 
-    // 1. Revert Viewfinder to Scanning State
-    if (dom.viewfinder) {
-      dom.viewfinder.classList.remove('target-locked');
-    }
+    // Wait for the grace period before tearing down AR state
+    lostDebounceTimer = setTimeout(() => {
+      if (state.currentTargetIndex === targetIndex) {
+        console.log(`[Tazheeb AR] Target genuinely lost after grace window: index ${targetIndex}`);
+        state.currentTargetIndex = null;
+        state.isTargetLocked = false;
 
-    if (dom.statusDot) {
-      dom.statusDot.classList.remove('locked');
-    }
+        // 1. Revert Viewfinder to Scanning State
+        if (dom.viewfinder) {
+          dom.viewfinder.classList.remove('target-locked');
+        }
 
-    if (dom.statusText) {
-      dom.statusText.textContent = 'SCANNING PRINTED PAGE...';
-    }
+        if (dom.statusDot) {
+          dom.statusDot.classList.remove('locked');
+        }
 
-    // 2. Hide Target Info Card
-    if (dom.targetCard) {
-      dom.targetCard.classList.remove('visible');
-    }
+        if (dom.statusText) {
+          dom.statusText.textContent = 'SCANNING PRINTED PAGE...';
+        }
 
-    // 3. Pause Video Overlay
-    const plate = state.plates[targetIndex];
-    if (plate) {
-      const video = document.getElementById(plate.videoId);
-      if (video) {
-        video.pause();
+        // 2. Hide Target Info Card
+        if (dom.targetCard) {
+          dom.targetCard.classList.remove('visible');
+        }
+
+        // 3. Pause Video Overlay
+        const plate = state.plates[targetIndex];
+        if (plate) {
+          const video = document.getElementById(plate.videoId);
+          if (video) {
+            video.pause();
+          }
+        }
       }
-    }
+      lostDebounceTimer = null;
+    }, GRACE_PERIOD_MS);
   }
 
   /**
@@ -250,6 +293,9 @@
     console.log(`[Tazheeb AR] Binding tracking listeners to ${targetEntities.length} entities.`);
 
     targetEntities.forEach((el, defaultIdx) => {
+      if (el._tazheebBound) return;
+      el._tazheebBound = true;
+
       // Determine target index
       let targetIndex = defaultIdx;
       const dataAttr = el.getAttribute('data-target-index');
