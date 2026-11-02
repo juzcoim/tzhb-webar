@@ -14,6 +14,7 @@
     isAudioEnabled: false,
     currentTargetIndex: null,
     isTargetLocked: false,
+    mediaPrimed: false,
     plates: [
       {
         index: 0,
@@ -58,21 +59,59 @@
     ]
   };
 
-  // DOM Elements
-  const dom = {
-    viewfinder: document.getElementById('viewfinder'),
-    statusDot: document.getElementById('status-dot'),
-    statusText: document.getElementById('status-text'),
-    targetCard: document.getElementById('target-info-card'),
-    targetLesson: document.getElementById('target-lesson-pill'),
-    targetTitle: document.getElementById('target-plate-title'),
-    targetDesc: document.getElementById('target-description'),
-    soundCard: document.getElementById('sound-trigger-card'),
-    soundText: document.getElementById('sound-toggle-text'),
-    soundIcon: document.getElementById('sound-toggle-icon'),
-    cameraModal: document.getElementById('camera-permission-modal'),
-    audioChime: document.getElementById('audio-chime')
-  };
+  // DOM Elements cache
+  let dom = {};
+
+  function initDom() {
+    dom = {
+      viewfinder: document.getElementById('viewfinder'),
+      statusDot: document.getElementById('status-dot'),
+      statusText: document.getElementById('status-text'),
+      targetCard: document.getElementById('target-info-card'),
+      targetLesson: document.getElementById('target-lesson-pill'),
+      targetTitle: document.getElementById('target-plate-title'),
+      targetDesc: document.getElementById('target-description'),
+      soundCard: document.getElementById('sound-trigger-card'),
+      soundText: document.getElementById('sound-toggle-text'),
+      soundIcon: document.getElementById('sound-toggle-icon'),
+      cameraModal: document.getElementById('camera-permission-modal'),
+      audioChime: document.getElementById('audio-chime')
+    };
+  }
+
+  /**
+   * Prime mobile media engine on first user touch/click.
+   * Required for iOS Safari to allow WebGL video textures and WebAudio playback.
+   */
+  function primeMobileMedia() {
+    if (state.mediaPrimed) return;
+    state.mediaPrimed = true;
+    console.log('[Tazheeb AR] Mobile media context primed via user gesture.');
+
+    state.plates.forEach(plate => {
+      const video = document.getElementById(plate.videoId);
+      if (video) {
+        video.muted = !state.isAudioEnabled;
+        video.playsInline = true;
+        const p = video.play();
+        if (p !== undefined) {
+          p.then(() => {
+            if (state.currentTargetIndex !== plate.index) {
+              video.pause();
+              video.currentTime = 0;
+            }
+          }).catch(() => {});
+        }
+      }
+    });
+
+    if (dom.audioChime) {
+      dom.audioChime.play().then(() => {
+        dom.audioChime.pause();
+        dom.audioChime.currentTime = 0;
+      }).catch(() => {});
+    }
+  }
 
   /**
    * Play audio chime on target lock
@@ -92,6 +131,7 @@
 
     dom.soundCard.addEventListener('click', () => {
       state.isAudioEnabled = !state.isAudioEnabled;
+      primeMobileMedia();
 
       // Update all video elements audio state
       state.plates.forEach(plate => {
@@ -102,12 +142,12 @@
       });
 
       if (state.isAudioEnabled) {
-        dom.soundText.textContent = 'Audio Enabled';
+        dom.soundText.textContent = 'Audio Commentary Active';
         dom.soundCard.style.background = 'linear-gradient(135deg, #55EFC4 0%, #00B894 100%)';
         dom.soundCard.style.color = '#090B0E';
         playChime();
       } else {
-        dom.soundText.textContent = 'Enable Audio';
+        dom.soundText.textContent = 'Enable Master Audio';
         dom.soundCard.style.background = 'var(--gold-gradient)';
         dom.soundCard.style.color = 'var(--bg-obsidian)';
       }
@@ -118,6 +158,7 @@
    * Handler when a MindAR image target is detected
    */
   function onTargetFound(targetIndex) {
+    console.log(`[Tazheeb AR] Target found: index ${targetIndex}`);
     state.currentTargetIndex = targetIndex;
     state.isTargetLocked = true;
     const plate = state.plates[targetIndex] || state.plates[0];
@@ -150,10 +191,13 @@
     const video = document.getElementById(plate.videoId);
     if (video) {
       video.muted = !state.isAudioEnabled;
+      video.playsInline = true;
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch(err => {
-          console.warn(`Autoplay blocked on ${plate.videoId}:`, err);
+          console.warn(`Autoplay with audio blocked on ${plate.videoId}, falling back to muted:`, err);
+          video.muted = true;
+          video.play().catch(e => console.error('Muted autoplay also blocked:', e));
         });
       }
     }
@@ -163,6 +207,7 @@
    * Handler when MindAR loses image tracking
    */
   function onTargetLost(targetIndex) {
+    console.log(`[Tazheeb AR] Target lost: index ${targetIndex}`);
     if (state.currentTargetIndex === targetIndex) {
       state.currentTargetIndex = null;
       state.isTargetLocked = false;
@@ -197,33 +242,28 @@
   }
 
   /**
-   * Register custom A-Frame tracking component for MindAR targets
+   * Bind event listeners directly to all MindAR target entities.
+   * Direct DOM event binding bypasses any component lifecycle races.
    */
-  function registerAFrameTracking() {
-    if (typeof AFRAME === 'undefined') {
-      console.warn('AFRAME not loaded yet, waiting...');
-      setTimeout(registerAFrameTracking, 100);
-      return;
-    }
+  function bindTargetListeners() {
+    const targetEntities = document.querySelectorAll('[mindar-image-target]');
+    console.log(`[Tazheeb AR] Binding tracking listeners to ${targetEntities.length} entities.`);
 
-    if (!AFRAME.components['tazheeb-target-listener']) {
-      AFRAME.registerComponent('tazheeb-target-listener', {
-        init: function () {
-          const el = this.el;
-          const targetIndex = parseInt(el.getAttribute('data-target-index') || '0', 10);
+    targetEntities.forEach((el, defaultIdx) => {
+      // Determine target index
+      let targetIndex = defaultIdx;
+      const dataAttr = el.getAttribute('data-target-index');
+      if (dataAttr !== null && dataAttr !== '') {
+        targetIndex = parseInt(dataAttr, 10);
+      } else {
+        const mindarAttr = el.getAttribute('mindar-image-target') || '';
+        const match = mindarAttr.match(/targetIndex:\s*(\d+)/);
+        if (match) targetIndex = parseInt(match[1], 10);
+      }
 
-          el.addEventListener('targetFound', () => {
-            console.log(`[Tazheeb AR] targetFound: index ${targetIndex}`);
-            onTargetFound(targetIndex);
-          });
-
-          el.addEventListener('targetLost', () => {
-            console.log(`[Tazheeb AR] targetLost: index ${targetIndex}`);
-            onTargetLost(targetIndex);
-          });
-        }
-      });
-    }
+      el.addEventListener('targetFound', () => onTargetFound(targetIndex));
+      el.addEventListener('targetLost', () => onTargetLost(targetIndex));
+    });
   }
 
   /**
@@ -247,7 +287,6 @@
 
     // Global navigator permission check
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      // Permission API if available
       if (navigator.permissions && navigator.permissions.query) {
         navigator.permissions.query({ name: 'camera' }).then(res => {
           if (res.state === 'denied') {
@@ -256,7 +295,6 @@
         }).catch(() => {});
       }
     } else {
-      // Non-HTTPS or unsupported environment
       if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
         showCameraModal('HTTPS Required for Camera', 'Mobile browsers require a secure HTTPS connection to activate WebAR camera scanning. Please use the secure local server link or Archival Portal.');
       }
@@ -273,12 +311,31 @@
     }
   }
 
-  // Initialize on DOM Ready
-  document.addEventListener('DOMContentLoaded', () => {
-    registerAFrameTracking();
+  // Setup Lifecycle Initialization
+  function initApp() {
+    initDom();
+    bindTargetListeners();
     setupSoundActivation();
     setupErrorHandling();
-  });
+
+    // Global touch/click listeners to prime mobile media engine
+    window.addEventListener('touchstart', primeMobileMedia, { once: true, passive: true });
+    window.addEventListener('click', primeMobileMedia, { once: true, passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+  } else {
+    initApp();
+  }
+
+  // Also re-verify target bindings when A-Frame scene signals loaded
+  const sceneEl = document.querySelector('a-scene');
+  if (sceneEl) {
+    sceneEl.addEventListener('loaded', () => {
+      console.log('[Tazheeb AR] A-Frame scene loaded event received.');
+      bindTargetListeners();
+    });
+  }
 
 })();
-
