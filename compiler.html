@@ -12,13 +12,14 @@
       --gold-light: #F6E27A;
       --text: #FAF6EE;
       --dim: #8B949E;
+      --border: rgba(212, 175, 55, 0.3);
     }
     body {
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       padding: 32px 20px;
-      max-width: 800px;
+      max-width: 860px;
       margin: 0 auto;
       line-height: 1.6;
     }
@@ -33,14 +34,30 @@
     }
     .panel {
       background: var(--card);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 24px;
       margin-bottom: 24px;
     }
+    .upload-box {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      background: rgba(10, 14, 20, 0.6);
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .upload-box:hover {
+      border-color: var(--gold-light);
+    }
+    .upload-box input {
+      display: none;
+    }
     .targets-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 16px;
       margin-bottom: 20px;
     }
@@ -50,6 +67,7 @@
       border-radius: 8px;
       padding: 10px;
       text-align: center;
+      position: relative;
     }
     .target-item img {
       width: 100%;
@@ -63,6 +81,9 @@
       font-size: 11px;
       color: var(--gold);
       font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .progress-bar-container {
       width: 100%;
@@ -71,13 +92,20 @@
       border-radius: 6px;
       overflow: hidden;
       margin-bottom: 16px;
-      border: 1px solid rgba(212, 175, 55, 0.2);
+      border: 1px solid var(--border);
     }
     .progress-bar-fill {
       width: 0%;
       height: 100%;
       background: linear-gradient(90deg, #C59B27, #F6E27A);
       transition: width 0.1s ease;
+    }
+    .actions-bar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
     }
     .btn {
       padding: 12px 24px;
@@ -90,7 +118,17 @@
       letter-spacing: 1px;
       cursor: pointer;
     }
-    .btn:disabled {
+    .btn-secondary {
+      padding: 11px 18px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--gold-light);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn:disabled, .btn-secondary:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
@@ -111,29 +149,31 @@
 <body>
 
   <h1>MindAR Target Compiler Pipeline</h1>
-  <p>Compiles Tazheeb printed curriculum plates into a high-performance <code>targets.mind</code> binary tracking map.</p>
+  <p>Compiles printed curriculum plates (or your own custom drawings) into a high-performance <code>targets.mind</code> binary tracking map.</p>
 
   <div class="panel">
-    <div class="targets-list">
-      <div class="target-item">
-        <img src="./assets/plates/plate-01-shamsa.png" alt="Plate 01">
-        <div class="target-title">Target 0: Shamsa</div>
-      </div>
-      <div class="target-item">
-        <img src="./assets/plates/plate-02-islimi.png" alt="Plate 02">
-        <div class="target-title">Target 1: Islimi</div>
-      </div>
-      <div class="target-item">
-        <img src="./assets/plates/plate-03-zarkari.png" alt="Plate 03">
-        <div class="target-title">Target 2: Zarkari</div>
-      </div>
+    
+    <!-- Upload Dropzone -->
+    <div class="upload-box" id="drop-zone" onclick="document.getElementById('file-input').click()">
+      <input type="file" id="file-input" multiple accept="image/png,image/jpeg,image/svg+xml">
+      <div style="font-size: 24px; margin-bottom: 6px;">📂</div>
+      <div style="font-weight: 600; color: var(--gold-light); margin-bottom: 4px;">Click or Drag &amp; Drop Custom Target Images</div>
+      <div style="font-size: 12px; color: var(--dim);">Upload high-contrast PNG or JPEG illustrations (Target index matches upload order)</div>
     </div>
+
+    <!-- Active Targets List -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <span style="font-size: 12px; font-weight: bold; color: var(--gold); text-transform: uppercase; letter-spacing: 1px;">Active Target Sequence:</span>
+      <button class="btn-secondary" id="reset-default-btn" type="button" style="padding: 4px 10px; font-size: 11px;">Reset to 3 Default Plates</button>
+    </div>
+
+    <div class="targets-list" id="targets-list"></div>
 
     <div class="progress-bar-container">
       <div class="progress-bar-fill" id="progress-fill"></div>
     </div>
 
-    <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px;">
+    <div class="actions-bar">
       <button class="btn" id="start-btn" type="button">Compile targets.mind</button>
       <span id="progress-label" style="font-size: 12px; color: var(--gold);">Ready to compile</span>
     </div>
@@ -148,12 +188,76 @@
     const progressFill = document.getElementById('progress-fill');
     const progressLabel = document.getElementById('progress-label');
     const startBtn = document.getElementById('start-btn');
+    const fileInput = document.getElementById('file-input');
+    const dropZone = document.getElementById('drop-zone');
+    const targetsList = document.getElementById('targets-list');
+    const resetBtn = document.getElementById('reset-default-btn');
+
+    // Default 3 Plates
+    const defaultPlates = [
+      { name: 'Target 0: Shamsa', url: './assets/plates/plate-01-shamsa.png' },
+      { name: 'Target 1: Islimi', url: './assets/plates/plate-02-islimi.png' },
+      { name: 'Target 2: Zarkari', url: './assets/plates/plate-03-zarkari.png' }
+    ];
+
+    let currentImages = [...defaultPlates];
 
     function log(msg) {
       logBox.textContent += msg + '\n';
       logBox.scrollTop = logBox.scrollHeight;
       console.log(msg);
     }
+
+    function renderTargets() {
+      targetsList.innerHTML = '';
+      currentImages.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'target-item';
+        div.innerHTML = `
+          <img src="${item.url}" alt="${item.name}">
+          <div class="target-title">Target ${idx}: ${item.name}</div>
+        `;
+        targetsList.appendChild(div);
+      });
+      progressLabel.textContent = `${currentImages.length} targets staged for compilation`;
+    }
+
+    renderTargets();
+
+    // Reset button
+    resetBtn.addEventListener('click', () => {
+      currentImages = [...defaultPlates];
+      renderTargets();
+      log('Reset to 3 default Tazheeb plates.');
+    });
+
+    // Custom file upload handling
+    fileInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      if (files.length === 0) return;
+      currentImages = [];
+      files.forEach((file, idx) => {
+        const url = URL.createObjectURL(file);
+        currentImages.push({
+          name: file.name.replace(/\.[^/.]+$/, ''),
+          url: url
+        });
+      });
+      renderTargets();
+      log(`Staged ${files.length} custom image files for compilation.`);
+    });
+
+    // Drag and Drop
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = '#F6E27A'; });
+    dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = 'var(--border)'; });
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = 'var(--border)';
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        fileInput.files = e.dataTransfer.files;
+        fileInput.dispatchEvent(new Event('change'));
+      }
+    });
 
     async function loadImage(url) {
       return new Promise((resolve, reject) => {
@@ -166,19 +270,19 @@
     }
 
     async function runCompilation() {
-      startBtn.disabled = true;
-      log('Starting MindAR image target compiler...');
+      if (currentImages.length === 0) {
+        alert('Please add at least one target image.');
+        return;
+      }
 
-      const targetUrls = [
-        './assets/plates/plate-01-shamsa.png',
-        './assets/plates/plate-02-islimi.png',
-        './assets/plates/plate-03-zarkari.png'
-      ];
+      startBtn.disabled = true;
+      resetBtn.disabled = true;
+      log(`Starting compilation for ${currentImages.length} target images...`);
 
       try {
-        log('Loading plate images into HTML memory...');
-        const images = await Promise.all(targetUrls.map(url => loadImage(url)));
-        log(`Loaded ${images.length} target images successfully.`);
+        log('Loading target images into memory...');
+        const images = await Promise.all(currentImages.map(t => loadImage(t.url)));
+        log(`Loaded ${images.length} images into HTML memory.`);
 
         const compiler = new Compiler();
         log('Extracting feature descriptors across scale octaves (Gaussian pyramid)...');
@@ -193,17 +297,16 @@
         const buffer = await compiler.exportData();
         log(`Generated targets.mind binary: ${buffer.byteLength} bytes.`);
 
-        // Download or post to local server
         const blob = new Blob([buffer], { type: 'application/octet-stream' });
         
-        // Auto-save via POST to local server if supported
+        // Auto-save via POST to local server if running locally
         try {
           const resp = await fetch('/save-targets', { method: 'POST', body: blob });
           if (resp.ok) {
-            log('✓ Successfully saved directly to assets/targets/targets.mind on local server!');
+            log('✓ Automatically saved directly to assets/targets/targets.mind on local server!');
           }
         } catch (e) {
-          log('Local server upload not active, downloading file directly.');
+          log('Downloaded targets.mind directly to your browser downloads folder.');
         }
 
         const link = document.createElement('a');
@@ -217,6 +320,7 @@
         console.error(err);
       } finally {
         startBtn.disabled = false;
+        resetBtn.disabled = false;
       }
     }
 
@@ -227,9 +331,7 @@
       setTimeout(runCompilation, 400);
     }
 
-    // Expose for headless automation
     window.__runMindARCompilation = runCompilation;
   </script>
 </body>
 </html>
-
