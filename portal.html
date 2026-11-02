@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archival Monograph Portal • Tazheeb Curriculum</title>
+
+  <!-- Metadata -->
+  <meta name="theme-color" content="#07090C">
+  <meta name="description" content="Direct video catalog and high-resolution plate repository for the traditional Tazheeb manuscript illumination curriculum.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./assets/css/portal.css">
+
+  <!-- Script -->
+  <script src="./assets/js/portal.js" defer></script>
+</head>
+<body>
+
+  <!-- Header / Monograph Frontispiece -->
+  <header class="monograph-header">
+    <div class="monograph-emblem">
+      <div class="monograph-emblem-inner">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="monograph-supertitle">Archival Monograph &amp; Media Repository</div>
+    <h1 class="monograph-title">Tazheeb Curriculum Companion</h1>
+    <p class="monograph-subtitle">
+      A zero-camera archival repository containing master instructional videos, high-contrast geometric plate drawings, and traditional illumination techniques for printed monograph study.
+    </p>
+
+    <div class="monograph-nav-actions">
+      <a href="./index.html" class="portal-ar-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <span>Launch WebAR Camera Scanner</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Catalog Content -->
+  <main class="catalog-container">
+    
+    <!-- Filter Toolbar -->
+    <div class="filter-toolbar">
+      <div class="filter-pills">
+        <button class="filter-pill active" data-filter="all" type="button">All Curriculum Plates (3)</button>
+        <button class="filter-pill" data-filter="ch1" type="button">Chapter I: Geometry</button>
+        <button class="filter-pill" data-filter="ch2" type="button">Chapter II: Foliation</button>
+        <button class="filter-pill" data-filter="ch3" type="button">Chapter III: Gilding</button>
+      </div>
+      <div class="catalog-stats" id="visible-count">3 Plates Displayed</div>
+    </div>
+
+    <!-- Plates Grid -->
+    <div class="plates-grid">
+
+      <!-- Plate Card 1 -->
+      <article class="plate-card" data-chapter="ch1">
+        <div class="plate-media-wrapper">
+          <video class="plate-video-player" src="./assets/videos/video-01-shamsa.mp4" controls preload="metadata" playsinline></video>
+          <img class="plate-image-preview hidden" src="./assets/plates/plate-01-shamsa.svg" alt="Plate 01: The Eightfold Shamsa" data-full-src="./assets/plates/plate-01-shamsa.svg">
+          <div class="media-toggle-bar">
+            <button class="media-toggle-btn btn-show-video active" type="button">Video</button>
+            <button class="media-toggle-btn btn-show-image" type="button">Plate Drawing</button>
+          </div>
+        </div>
+        <div class="plate-content">
+          <div class="plate-meta-row">
+            <span class="plate-lesson-tag">Chapter I • Lesson 1.1</span>
+            <span class="plate-duration">Master Video • 04:30</span>
+          </div>
+          <h2 class="plate-name">The Eightfold Shamsa</h2>
+          <div class="plate-arabic-label">شمسه هشت‌پر و هندسه دایره</div>
+          <p class="plate-desc">
+            Constructing the foundational octagram star grid using compass division. Covers parchment preparation, ground gesso layering, and burnishing geometry for 32-ray radial burst coronas.
+          </p>
+          <div class="plate-curriculum-topics">
+            <span class="topic-tag">Radial Girih</span>
+            <span class="topic-tag">Octagram Star</span>
+            <span class="topic-tag">Gesso Ground</span>
+            <span class="topic-tag">Ray Corona</span>
+          </div>
+          <div class="plate-card-actions">
+            <button class="card-btn card-btn-primary btn-zoom-plate" data-full-src="./assets/plates/plate-01-shamsa.svg" type="button">
+              Inspect Vector Plate
+            </button>
+            <a href="./assets/videos/video-01-shamsa.mp4" download="plate-01-shamsa.mp4" class="card-btn card-btn-secondary">
+              Download Media
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Plate Card 2 -->
+      <article class="plate-card" data-chapter="ch2">
+        <div class="plate-media-wrapper">
+          <video class="plate-video-player" src="./assets/videos/video-02-islimi.mp4" controls preload="metadata" playsinline></video>
+          <img class="plate-image-preview hidden" src="./assets/plates/plate-02-islimi.svg" alt="Plate 02: The Biomorphic Islimi" data-full-src="./assets/plates/plate-02-islimi.svg">
+          <div class="media-toggle-bar">
+            <button class="media-toggle-btn btn-show-video active" type="button">Video</button>
+            <button class="media-toggle-btn btn-show-image" type="button">Plate Drawing</button>
+          </div>
+        </div>
+        <div class="plate-content">
+          <div class="plate-meta-row">
+            <span class="plate-lesson-tag">Chapter II • Lesson 2.1</span>
+            <span class="plate-duration">Master Video • 04:30</span>
+          </div>
+          <h2 class="plate-name">The Biomorphic Islimi</h2>
+          <div class="plate-arabic-label">اسلیمی ساده، ماری و گل‌های خطایی</div>
+          <p class="plate-desc">
+            Drafting harmonic logarithmic golden spirals with constant curvature. Demonstrates executing Rumi split-leaf palmettes and razor-sharp black ink tahrir contours with a sable brush.
+          </p>
+          <div class="plate-curriculum-topics">
+            <span class="topic-tag">Logarithmic Spiral</span>
+            <span class="topic-tag">Rumi Split Leaves</span>
+            <span class="topic-tag">Khatai Lotus</span>
+            <span class="topic-tag">Tahrir Inking</span>
+          </div>
+          <div class="plate-card-actions">
+            <button class="card-btn card-btn-primary btn-zoom-plate" data-full-src="./assets/plates/plate-02-islimi.svg" type="button">
+              Inspect Vector Plate
+            </button>
+            <a href="./assets/videos/video-02-islimi.mp4" download="plate-02-islimi.mp4" class="card-btn card-btn-secondary">
+              Download Media
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Plate Card 3 -->
+      <article class="plate-card" data-chapter="ch3">
+        <div class="plate-media-wrapper">
+          <video class="plate-video-player" src="./assets/videos/video-03-zarkari.mp4" controls preload="metadata" playsinline></video>
+          <img class="plate-image-preview hidden" src="./assets/plates/plate-03-zarkari.svg" alt="Plate 03: Zarkari Masterwork" data-full-src="./assets/plates/plate-03-zarkari.svg">
+          <div class="media-toggle-bar">
+            <button class="media-toggle-btn btn-show-video active" type="button">Video</button>
+            <button class="media-toggle-btn btn-show-image" type="button">Plate Drawing</button>
+          </div>
+        </div>
+        <div class="plate-content">
+          <div class="plate-meta-row">
+            <span class="plate-lesson-tag">Chapter III • Lesson 3.1</span>
+            <span class="plate-duration">Master Video • 04:30</span>
+          </div>
+          <h2 class="plate-name">Zarkari &amp; Gilding Masterwork</h2>
+          <div class="plate-arabic-label">زرکاری، سرلوح و رنگ‌گذاری لاجورد</div>
+          <p class="plate-desc">
+            The grand illuminated manuscript sarlowh (frontispiece). Applying shell gold (morakkab), agate dog-tooth burnishing for mirror gloss reflections, and grinding pure lapis lazuli mineral pigment.
+          </p>
+          <div class="plate-curriculum-topics">
+            <span class="topic-tag">Shell Gold (Zarkari)</span>
+            <span class="topic-tag">Agate Burnishing</span>
+            <span class="topic-tag">Lapis Lazuli</span>
+            <span class="topic-tag">Sarlowh Arch</span>
+          </div>
+          <div class="plate-card-actions">
+            <button class="card-btn card-btn-primary btn-zoom-plate" data-full-src="./assets/plates/plate-03-zarkari.svg" type="button">
+              Inspect Vector Plate
+            </button>
+            <a href="./assets/videos/video-03-zarkari.mp4" download="plate-03-zarkari.mp4" class="card-btn card-btn-secondary">
+              Download Media
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Lightbox Modal for Full-Resolution Plate Inspection -->
+  <div class="lightbox-modal" id="lightbox-modal" role="dialog" aria-modal="true">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close Lightbox">&times;</button>
+      <img class="lightbox-img" id="lightbox-img" src="" alt="High-Resolution Tazheeb Plate Drawing">
+    </div>
+  </div>
+
+</body>
+</html>
+

@@ -1,0 +1,557 @@
+/* ==========================================================================
+   TAZHEEB AR COMPANION - STUDIO STYLESHEET (style.css)
+   Aesthetic: Traditional Manuscript Illumination / Obsidian & Burnished Gold
+   ========================================================================== */
+
+:root {
+  --bg-obsidian: #090B0E;
+  --bg-surface: rgba(16, 21, 29, 0.85);
+  --bg-surface-glass: rgba(14, 18, 25, 0.72);
+  --border-gold: #D4AF37;
+  --border-gold-subtle: rgba(212, 175, 55, 0.35);
+  --gold-glow: rgba(212, 175, 55, 0.45);
+  --gold-gradient: linear-gradient(135deg, #FFF0A0 0%, #D4AF37 50%, #8C6514 100%);
+  --gold-text: #F6E27A;
+  --gold-muted: #C59B27;
+  --vellum-white: #FAF6EE;
+  --lapis-blue: #143258;
+  --crimson: #8B1E1E;
+  --emerald: #1B4D3E;
+  --text-muted: #A0AEC0;
+  --font-serif: 'Cinzel', 'Playfair Display', 'Georgia', serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --safe-top: env(safe-area-inset-top, 16px);
+  --safe-bottom: env(safe-area-inset-bottom, 20px);
+  --safe-left: env(safe-area-inset-left, 16px);
+  --safe-right: env(safe-area-inset-right, 16px);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-obsidian);
+  color: var(--vellum-white);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   AR Viewport Container
+   -------------------------------------------------------------------------- */
+#ar-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+/* Force A-Frame video and mindar video to fill screen */
+.a-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* --------------------------------------------------------------------------
+   HUD Overlay (Z-Index Layering over WebAR Canvas)
+   -------------------------------------------------------------------------- */
+.hud-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+}
+
+/* --------------------------------------------------------------------------
+   Header Bar
+   -------------------------------------------------------------------------- */
+.hud-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: auto;
+  padding: 10px 16px;
+  background: var(--bg-surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.hud-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hud-emblem {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.hud-emblem-inner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-obsidian);
+  border: 1px solid var(--gold-muted);
+}
+
+.hud-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-title {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold-text);
+  text-transform: uppercase;
+}
+
+.hud-subtitle {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.hud-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(20, 27, 38, 0.8);
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: 8px;
+  color: var(--vellum-white);
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hud-btn:hover, .hud-btn:active {
+  background: var(--gold-muted);
+  color: var(--bg-obsidian);
+  border-color: var(--gold-text);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.hud-btn img, .hud-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   Central Viewfinder HUD
+   -------------------------------------------------------------------------- */
+.hud-viewfinder-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hud-viewfinder {
+  width: 280px;
+  height: 280px;
+  max-width: 75vw;
+  max-height: 75vw;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Corner Reticles */
+.viewfinder-corner {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-color: var(--border-gold);
+  border-style: solid;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px var(--gold-glow));
+  transition: all 0.3s ease;
+}
+
+.corner-tl { top: 0; left: 0; border-width: 3px 0 0 3px; border-top-left-radius: 8px; }
+.corner-tr { top: 0; right: 0; border-width: 3px 3px 0 0; border-top-right-radius: 8px; }
+.corner-bl { bottom: 0; left: 0; border-width: 0 0 3px 3px; border-bottom-left-radius: 8px; }
+.corner-br { bottom: 0; right: 0; border-width: 0 3px 3px 0; border-bottom-right-radius: 8px; }
+
+/* Center Crosshair & Reticle */
+.viewfinder-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px dashed rgba(212, 175, 55, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: reticleSpin 24s linear infinite;
+}
+
+.viewfinder-pip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-text);
+  box-shadow: 0 0 8px var(--gold-glow);
+  animation: pipPulse 2s ease-in-out infinite;
+}
+
+@keyframes reticleSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes pipPulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Scanning Scanline animation */
+.viewfinder-scanline {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-gold), var(--gold-text), transparent);
+  box-shadow: 0 0 10px var(--gold-glow);
+  animation: scanLineMove 2.8s ease-in-out infinite;
+}
+
+@keyframes scanLineMove {
+  0% { top: 5%; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { top: 95%; opacity: 0; }
+}
+
+/* Target Found Active State on Viewfinder */
+.hud-viewfinder.target-locked {
+  transform: scale(1.04);
+}
+
+.hud-viewfinder.target-locked .viewfinder-corner {
+  border-color: #55EFC4;
+  filter: drop-shadow(0 0 8px rgba(85, 239, 196, 0.8));
+}
+
+.hud-viewfinder.target-locked .viewfinder-scanline {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Telemetry & Status Badge
+   -------------------------------------------------------------------------- */
+.hud-status-badge {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--bg-surface-glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #F39C12;
+  box-shadow: 0 0 8px rgba(243, 156, 18, 0.8);
+  animation: statusBlink 1.5s infinite;
+}
+
+.status-dot.locked {
+  background: #2ECC71;
+  box-shadow: 0 0 10px rgba(46, 204, 113, 0.9);
+  animation: none;
+}
+
+.status-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--vellum-white);
+  letter-spacing: 0.5px;
+}
+
+@keyframes statusBlink {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   Bottom Dock & Audio Activation Card
+   -------------------------------------------------------------------------- */
+.hud-bottom-dock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: auto;
+  align-items: center;
+}
+
+/* Target Locked Plate Information Card */
+.target-info-card {
+  width: 100%;
+  max-width: 480px;
+  padding: 12px 16px;
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-gold);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  display: none;
+  animation: slideUpFade 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.target-info-card.visible {
+  display: block;
+}
+
+.target-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.target-lesson-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--gold-text);
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--border-gold-subtle);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.target-plate-title {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--vellum-white);
+  margin-bottom: 4px;
+}
+
+.target-description {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Sound Activation Trigger Card */
+.sound-trigger-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: var(--gold-gradient);
+  border: 1px solid #FFEAA7;
+  border-radius: 30px;
+  color: var(--bg-obsidian);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px var(--gold-glow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sound-trigger-card:hover, .sound-trigger-card:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 26px rgba(212, 175, 55, 0.7);
+}
+
+.sound-trigger-card img, .sound-trigger-card svg {
+  width: 16px;
+  height: 16px;
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   Permission & Error Modals
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(8, 11, 15, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+}
+
+.modal-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+}
+
+.modal-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--gold-text);
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold-text);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.modal-body {
+  font-size: 13px;
+  color: var(--vellum-white);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-primary {
+  padding: 12px 20px;
+  background: var(--gold-gradient);
+  border: none;
+  border-radius: 8px;
+  color: var(--bg-obsidian);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: 8px;
+  color: var(--gold-text);
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  background: rgba(212, 175, 55, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Mobile Adjustments
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .hud-header {
+    padding: 8px 12px;
+  }
+  .hud-title {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+  }
+  .hud-subtitle {
+    font-size: 9px;
+  }
+  .hud-viewfinder {
+    width: 240px;
+    height: 240px;
+  }
+  .target-info-card {
+    padding: 10px 14px;
+  }
+  .target-plate-title {
+    font-size: 13px;
+  }
+}
+

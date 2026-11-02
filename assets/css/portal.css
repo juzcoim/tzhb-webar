@@ -1,0 +1,447 @@
+/* ==========================================================================
+   TAZHEEB AR COMPANION - ARCHIVAL MONOGRAPH PORTAL (portal.css)
+   Aesthetic: Museum Publication / Archival Art Catalog
+   ========================================================================== */
+
+:root {
+  --bg-deep: #07090C;
+  --bg-card: #0E131A;
+  --bg-card-hover: #141B24;
+  --border-gold: #D4AF37;
+  --border-gold-subtle: rgba(212, 175, 55, 0.25);
+  --gold-glow: rgba(212, 175, 55, 0.3);
+  --gold-gradient: linear-gradient(135deg, #FFF0A0 0%, #D4AF37 50%, #8C6514 100%);
+  --gold-text: #F6E27A;
+  --vellum-white: #FAF6EE;
+  --vellum-muted: #D1C7B7;
+  --text-dim: #8B949E;
+  --lapis-accent: #153258;
+  --font-serif: 'Cinzel', 'Playfair Display', 'Georgia', serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--vellum-white);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* --------------------------------------------------------------------------
+   Header / Frontispiece Hero
+   -------------------------------------------------------------------------- */
+.monograph-header {
+  border-bottom: 1px solid var(--border-gold-subtle);
+  background: radial-gradient(circle at 50% 0%, #152233 0%, var(--bg-deep) 70%);
+  padding: 48px 24px 36px 24px;
+  text-align: center;
+  position: relative;
+}
+
+.monograph-emblem {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px auto;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 24px var(--gold-glow);
+}
+
+.monograph-emblem-inner {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.monograph-emblem-inner svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--gold-text);
+}
+
+.monograph-supertitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--border-gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.monograph-title {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 5vw, 42px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold-text);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.monograph-subtitle {
+  font-size: 15px;
+  color: var(--vellum-muted);
+  max-width: 680px;
+  margin: 0 auto 24px auto;
+  font-weight: 300;
+}
+
+.monograph-nav-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.portal-ar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: var(--gold-gradient);
+  color: var(--bg-deep);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 4px 18px var(--gold-glow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.portal-ar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.6);
+}
+
+.portal-ar-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--bg-deep);
+}
+
+/* --------------------------------------------------------------------------
+   Main Catalog Container
+   -------------------------------------------------------------------------- */
+.catalog-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 24px;
+}
+
+/* Chapter Filter Toolbar */
+.filter-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.filter-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: 20px;
+  color: var(--vellum-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-pill:hover {
+  border-color: var(--border-gold);
+  color: var(--gold-text);
+}
+
+.filter-pill.active {
+  background: var(--border-gold);
+  color: var(--bg-deep);
+  border-color: var(--gold-text);
+  box-shadow: 0 2px 10px var(--gold-glow);
+}
+
+.catalog-stats {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* --------------------------------------------------------------------------
+   Plates Grid
+   -------------------------------------------------------------------------- */
+.plates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 32px;
+}
+
+.plate-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.plate-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-gold);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7), 0 0 15px var(--gold-glow);
+}
+
+/* Media Gallery in Card */
+.plate-media-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #000;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-gold-subtle);
+}
+
+.plate-video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.plate-image-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #0a0d12;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.plate-image-preview.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.media-toggle-bar {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+
+.media-toggle-btn {
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 4px;
+  background: rgba(14, 19, 26, 0.85);
+  backdrop-filter: blur(4px);
+  color: var(--vellum-white);
+  border: 1px solid var(--border-gold-subtle);
+  cursor: pointer;
+}
+
+.media-toggle-btn.active {
+  background: var(--border-gold);
+  color: var(--bg-deep);
+}
+
+/* Card Content Details */
+.plate-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.plate-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.plate-lesson-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold-text);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid var(--border-gold-subtle);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.plate-duration {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.plate-name {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--vellum-white);
+  margin-bottom: 6px;
+}
+
+.plate-arabic-label {
+  font-size: 14px;
+  color: var(--border-gold);
+  font-family: 'Amiri', 'Traditional Arabic', serif;
+  margin-bottom: 12px;
+}
+
+.plate-desc {
+  font-size: 13px;
+  color: var(--vellum-muted);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.plate-curriculum-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.topic-tag {
+  font-size: 10px;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  color: var(--text-dim);
+}
+
+.plate-card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.card-btn {
+  flex: 1;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card-btn-primary {
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--border-gold);
+  color: var(--gold-text);
+}
+
+.card-btn-primary:hover {
+  background: var(--border-gold);
+  color: var(--bg-deep);
+}
+
+.card-btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--vellum-muted);
+}
+
+.card-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--vellum-white);
+}
+
+/* --------------------------------------------------------------------------
+   Image Zoom Lightbox Modal
+   -------------------------------------------------------------------------- */
+.lightbox-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 7, 10, 0.94);
+  backdrop-filter: blur(10px);
+  z-index: 3000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.lightbox-modal.active {
+  display: flex;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-img {
+  max-width: 80vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border: 1px solid var(--border-gold);
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: var(--gold-text);
+  font-size: 28px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .plates-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

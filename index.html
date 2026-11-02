@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Tazheeb WebAR • Traditional Illumination Companion</title>
+  
+  <!-- Favicon / Web App Metadata -->
+  <meta name="theme-color" content="#090B0E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Studio-grade WebAR instructional companion for traditional Tazheeb manuscript illumination curriculum.">
+
+  <!-- Fonts: Cinzel & Playfair for authentic classical manuscript typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- MindAR v1.2.5 & A-Frame v1.5.0 Engine Scripts -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <!-- Application Tracking Logic -->
+  <script src="./assets/js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- WebAR 3D Tracking Scene -->
+  <div id="ar-viewport">
+    <a-scene
+      mindar-image="imageTargetSrc: ./assets/targets/targets.mind; autoStart: true; uiLoading: no; uiScanning: no; filterMinCF: 0.0001; filterBeta: 0.001; warmupTolerance: 5; missTolerance: 5;"
+      color-space="sRGB"
+      embedded
+      renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false">
+
+      <a-assets timeout="10000">
+        <!-- High-Performance Master Video Streams with iOS playsinline -->
+        <video id="video-shamsa" src="./assets/videos/video-01-shamsa.mp4" preload="auto" loop="true" playsinline webkit-playsinline muted crossorigin="anonymous"></video>
+        <video id="video-islimi" src="./assets/videos/video-02-islimi.mp4" preload="auto" loop="true" playsinline webkit-playsinline muted crossorigin="anonymous"></video>
+        <video id="video-zarkari" src="./assets/videos/video-03-zarkari.mp4" preload="auto" loop="true" playsinline webkit-playsinline muted crossorigin="anonymous"></video>
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <!-- Target 0: Plate I - The Eightfold Shamsa -->
+      <a-entity mindar-image-target="targetIndex: 0" tazheeb-target-listener data-target-index="0">
+        <a-plane src="#video-shamsa" position="0 0 0" height="1" width="1" rotation="0 0 0" material="opacity: 0.98; shader: flat"></a-plane>
+      </a-entity>
+
+      <!-- Target 1: Plate II - The Biomorphic Islimi Spiral -->
+      <a-entity mindar-image-target="targetIndex: 1" tazheeb-target-listener data-target-index="1">
+        <a-plane src="#video-islimi" position="0 0 0" height="1" width="1" rotation="0 0 0" material="opacity: 0.98; shader: flat"></a-plane>
+      </a-entity>
+
+      <!-- Target 2: Plate III - Zarkari Illumination Masterwork -->
+      <a-entity mindar-image-target="targetIndex: 2" tazheeb-target-listener data-target-index="2">
+        <a-plane src="#video-zarkari" position="0 0 0" height="1" width="1" rotation="0 0 0" material="opacity: 0.98; shader: flat"></a-plane>
+      </a-entity>
+    </a-scene>
+  </div>
+
+  <!-- Audio Feedback Chime Element -->
+  <audio id="audio-chime" src="./assets/audio/chime.wav" preload="auto"></audio>
+
+  <!-- Studio-Grade HUD Interface Layer -->
+  <div class="hud-overlay">
+    
+    <!-- Top HUD Navigation & Curriculum Brand -->
+    <header class="hud-header">
+      <div class="hud-brand">
+        <div class="hud-emblem">
+          <div class="hud-emblem-inner"></div>
+        </div>
+        <div class="hud-titles">
+          <span class="hud-title">Tazheeb AR</span>
+          <span class="hud-subtitle">Manuscript Companion</span>
+        </div>
+      </div>
+      <div class="hud-actions">
+        <a href="./portal.html" class="hud-btn" id="btn-portal" title="Open Archival Video Catalog">
+          <img src="./assets/icons/book.svg" alt="Book Icon">
+          <span>Archival Portal</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Central Interactive Viewfinder Reticle -->
+    <div class="hud-viewfinder-container">
+      <div class="hud-viewfinder" id="viewfinder">
+        <div class="viewfinder-corner corner-tl"></div>
+        <div class="viewfinder-corner corner-tr"></div>
+        <div class="viewfinder-corner corner-bl"></div>
+        <div class="viewfinder-corner corner-br"></div>
+        <div class="viewfinder-center">
+          <div class="viewfinder-pip"></div>
+        </div>
+        <div class="viewfinder-scanline"></div>
+
+        <!-- Dynamic Status Telemetry Badge -->
+        <div class="hud-status-badge">
+          <span class="status-dot" id="status-dot"></span>
+          <span class="status-text" id="status-text">INITIALIZING CAMERA...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Dock: Target Details & Audio Activation -->
+    <div class="hud-bottom-dock">
+      
+      <!-- Target Locked Telemetry Card -->
+      <div class="target-info-card" id="target-info-card">
+        <div class="target-info-header">
+          <span class="target-lesson-pill" id="target-lesson-pill">Master Lesson 1.1</span>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--border-gold);">LIVE AR FEED</span>
+        </div>
+        <h3 class="target-plate-title" id="target-plate-title">Plate I: The Eightfold Shamsa</h3>
+        <p class="target-description" id="target-description">
+          Octagram radial geometry, compass division, and ground preparation for shell gold gilding.
+        </p>
+      </div>
+
+      <!-- Sound-Activation Trigger Card (iOS Safari Autoplay Barrier Buster) -->
+      <button class="sound-trigger-card" id="sound-trigger-card" type="button" aria-label="Toggle Audio Commentary">
+        <img src="./assets/icons/sound-on.svg" alt="Sound Icon" id="sound-toggle-icon">
+        <span id="sound-toggle-text">Enable Master Audio</span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Camera Permission & Error Handling Modal -->
+  <div class="modal-overlay" id="camera-permission-modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+          <line x1="1" y1="1" x2="23" y2="23" stroke="#E74C3C" stroke-width="2.5"/>
+        </svg>
+      </div>
+      <h3 class="modal-title">Camera Access Required</h3>
+      <p class="modal-body">
+        WebAR requires camera permissions to detect printed Tazheeb plates. If camera access is unavailable on this device, you can study all curriculum master videos directly in our zero-camera Archival Portal.
+      </p>
+      <div class="modal-actions">
+        <a href="./portal.html" class="btn-primary">Open Archival Portal</a>
+        <button class="btn-secondary" type="button" onclick="location.reload()">Retry Camera Access</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+

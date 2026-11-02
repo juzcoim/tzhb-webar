@@ -1,0 +1,29 @@
+{
+  "name": "tazheeb-webar-companion",
+  "version": "1.0.0",
+  "description": "Studio-grade WebAR instructional companion for traditional Tazheeb manuscript illumination printed curriculum",
+  "main": "scripts/server.js",
+  "scripts": {
+    "start": "node scripts/server.js",
+    "dev": "node scripts/server.js",
+    "generate:mocks": "node scripts/generate-mocks.js",
+    "compile:targets": "node scripts/compile-targets.js",
+    "test:streams": "node scripts/verify-streams.js",
+    "test:lint": "node scripts/lint-check.js",
+    "test": "npm run test:lint && npm run test:streams",
+    "deploy:pages": "npx wrangler pages deploy . --project-name=tazheeb-webar"
+  },
+  "keywords": [
+    "webar",
+    "mindar",
+    "aframe",
+    "tazheeb",
+    "manuscript-illumination",
+    "islamic-art",
+    "augmented-reality",
+    "educational"
+  ],
+  "author": "Tazheeb Studio",
+  "license": "MIT"
+}
+

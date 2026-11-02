@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="100%" height="100%">
+  <defs>
+    <radialGradient id="shamsaGold" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFEAA7" />
+      <stop offset="60%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#916B15" />
+    </radialGradient>
+    <radialGradient id="lapisCore" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#254B7A" />
+      <stop offset="80%" stop-color="#122642" />
+      <stop offset="100%" stop-color="#081322" />
+    </radialGradient>
+    <pattern id="vellumTexture" width="40" height="40" patternUnits="userSpaceOnUse">
+      <rect width="40" height="40" fill="#FAF6EE"/>
+      <circle cx="10" cy="10" r="1" fill="#E8DEC8" opacity="0.6"/>
+      <circle cx="30" cy="25" r="1.2" fill="#DFD2BA" opacity="0.6"/>
+    </pattern>
+  </defs>
+
+  <!-- Parchment Canvas -->
+  <rect width="1000" height="1000" fill="url(#vellumTexture)"/>
+
+  <!-- Ornate Border Frame with High-Contrast Features -->
+  <rect x="30" y="30" width="940" height="940" fill="none" stroke="#0A0D12" stroke-width="8"/>
+  <rect x="42" y="42" width="916" height="916" fill="none" stroke="#C59B27" stroke-width="4"/>
+  <rect x="52" y="52" width="896" height="896" fill="none" stroke="#0A0D12" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- Four Corner Cartouches -->
+  <g fill="#143258" stroke="#C59B27" stroke-width="2">
+    <polygon points="54,54 140,54 54,140"/>
+    <polygon points="946,54 860,54 946,140"/>
+    <polygon points="54,946 140,946 54,860"/>
+    <polygon points="946,946 860,946 946,860"/>
+  </g>
+  <g fill="#D4AF37">
+    <circle cx="85" cy="85" r="8" stroke="#0A0D12" stroke-width="2"/>
+    <circle cx="915" cy="85" r="8" stroke="#0A0D12" stroke-width="2"/>
+    <circle cx="85" cy="915" r="8" stroke="#0A0D12" stroke-width="2"/>
+    <circle cx="915" cy="915" r="8" stroke="#0A0D12" stroke-width="2"/>
+  </g>
+
+  <!-- Title Banner (Curriculum Identification) -->
+  <g id="title-cartouche">
+    <rect x="180" y="65" width="640" height="38" rx="6" fill="#0A0D12" stroke="#D4AF37" stroke-width="2"/>
+    <text x="500" y="90" font-family="'Cinzel', 'Georgia', serif" font-size="14" font-weight="bold" fill="#F8E7A2" text-anchor="middle" letter-spacing="4">
+      TAZHEEB CURRICULUM • PLATE 01: THE EIGHTFOLD SHAMSA
+    </text>
+  </g>
+
+  <!-- Outer Ray Corona -->
+  <g id="rays">
+    <polygon points="940.0,500.0 838.9,472.8 838.9,527.2" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="956.0" cy="500.0" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="882.5,576.1 837.7,539.5 827.1,592.8" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="898.2" cy="579.2" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="906.5,668.4 823.5,604.6 802.7,654.8" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="921.3" cy="674.5" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="824.3,716.7 796.9,665.7 766.7,710.9" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="837.6" cy="725.6" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="811.1,811.1 758.9,720.4 720.4,758.9" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="822.4" cy="822.4" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="716.7,824.3 710.9,766.7 665.7,796.9" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="725.6" cy="837.6" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="668.4,906.5 654.8,802.7 604.6,823.5" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="674.5" cy="921.3" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="576.1,882.5 592.8,827.1 539.5,837.7" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="579.2" cy="898.2" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="500.0,940.0 527.2,838.9 472.8,838.9" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="500.0" cy="956.0" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="423.9,882.5 460.5,837.7 407.2,827.1" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="420.8" cy="898.2" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="331.6,906.5 395.4,823.5 345.2,802.7" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="325.5" cy="921.3" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="283.3,824.3 334.3,796.9 289.1,766.7" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="274.4" cy="837.6" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="188.9,811.1 279.6,758.9 241.1,720.4" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="177.6" cy="822.4" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="175.7,716.7 233.3,710.9 203.1,665.7" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="162.4" cy="725.6" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="93.5,668.4 197.3,654.8 176.5,604.6" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="78.7" cy="674.5" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="117.5,576.1 172.9,592.8 162.3,539.5" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="101.8" cy="579.2" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="60.0,500.0 161.1,527.2 161.1,472.8" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="44.0" cy="500.0" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="117.5,423.9 162.3,460.5 172.9,407.2" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="101.8" cy="420.8" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="93.5,331.6 176.5,395.4 197.3,345.2" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="78.7" cy="325.5" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="175.7,283.3 203.1,334.3 233.3,289.1" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="162.4" cy="274.4" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="188.9,188.9 241.1,279.6 279.6,241.1" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="177.6" cy="177.6" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="283.3,175.7 289.1,233.3 334.3,203.1" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="274.4" cy="162.4" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="331.6,93.5 345.2,197.3 395.4,176.5" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="325.5" cy="78.7" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="423.9,117.5 407.2,172.9 460.5,162.3" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="420.8" cy="101.8" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="500.0,60.0 472.8,161.1 527.2,161.1" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="500.0" cy="44.0" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="576.1,117.5 539.5,162.3 592.8,172.9" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="579.2" cy="101.8" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="668.4,93.5 604.6,176.5 654.8,197.3" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="674.5" cy="78.7" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="716.7,175.7 665.7,203.1 710.9,233.3" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="725.6" cy="162.4" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="811.1,188.9 720.4,241.1 758.9,279.6" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="822.4" cy="177.6" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="824.3,283.3 766.7,289.1 796.9,334.3" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="837.6" cy="274.4" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="906.5,331.6 802.7,345.2 823.5,395.4" fill="#C59B27" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="921.3" cy="325.5" r="5" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+<polygon points="882.5,423.9 827.1,407.2 837.7,460.5" fill="#9E7815" stroke="#0A0D12" stroke-width="2"/>
+<circle cx="898.2" cy="420.8" r="3" fill="#E8C868" stroke="#0A0D12" stroke-width="1.5"/>
+
+  </g>
+
+  <!-- Outer Ring Guilloche -->
+  <circle cx="500" cy="500" r="340" fill="none" stroke="#0A0D12" stroke-width="5"/>
+  <circle cx="500" cy="500" r="335" fill="none" stroke="#D4AF37" stroke-width="3"/>
+  <circle cx="500" cy="500" r="280" fill="#FAF6EE" stroke="#0A0D12" stroke-width="3"/>
+
+  <!-- Petal Wreath -->
+  <g id="petals">
+    <g transform="translate(780.0,500.0) rotate(90)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(758.7,607.2) rotate(112.5)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(698.0,698.0) rotate(135)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(607.2,758.7) rotate(157.5)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(500.0,780.0) rotate(180)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(392.8,758.7) rotate(202.5)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(302.0,698.0) rotate(225)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(241.3,607.2) rotate(247.5)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(220.0,500.0) rotate(270)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(241.3,392.8) rotate(292.5)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(302.0,302.0) rotate(315)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(392.8,241.3) rotate(337.5)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(500.0,220.0) rotate(360)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(607.2,241.3) rotate(382.5)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(698.0,302.0) rotate(405)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+<g transform="translate(758.7,392.8) rotate(427.5)">
+      <path d="M 0,-45 C 25,-20 30,10 0,45 C -30,10 -25,-20 0,-45 Z" fill="#143258" stroke="#E5C158" stroke-width="3"/>
+      <path d="M 0,-30 C 15,-10 18,5 0,30 C -18,5 -15,-10 0,-30 Z" fill="#C59B27" stroke="#0A0D12" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF5E8" stroke="#0A0D12" stroke-width="1"/>
+    </g>
+
+  </g>
+
+  <!-- Central Star Polygonal Girih (Geometric Octagram) -->
+  <circle cx="500" cy="500" r="215" fill="#143258" stroke="#D4AF37" stroke-width="4"/>
+  <polygon points="710.0,500.0 648.5,648.5 500.0,710.0 351.5,648.5 290.0,500.0 351.5,351.5 500.0,290.0 648.5,351.5" fill="none" stroke="#FAF5E8" stroke-width="3"/>
+  <polygon points="694.0,580.4 580.4,694.0 419.6,694.0 306.0,580.4 306.0,419.6 419.6,306.0 580.4,306.0 694.0,419.6" fill="none" stroke="#FAF5E8" stroke-width="3"/>
+
+  <!-- Inner Shamsa Core -->
+  <circle cx="500" cy="500" r="150" fill="url(#shamsaGold)" stroke="#0A0D12" stroke-width="5"/>
+  <circle cx="500" cy="500" r="140" fill="none" stroke="#FAF5E8" stroke-width="2" stroke-dasharray="4,4"/>
+
+  <!-- Central Lapis Jewel with Golden Islimi Rosette -->
+  <circle cx="500" cy="500" r="90" fill="url(#lapisCore)" stroke="#D4AF37" stroke-width="4"/>
+  <circle cx="500" cy="500" r="75" fill="none" stroke="#E5C158" stroke-width="1.5"/>
+  
+  <!-- Central 8-Point Rosette Core -->
+  <g stroke="#0A0D12" stroke-width="1.5">
+    <path d="M 500,430 Q 525,480 500,500 Q 475,480 500,430 Z" fill="#D4AF37"/>
+    <path d="M 500,570 Q 525,520 500,500 Q 475,520 500,570 Z" fill="#D4AF37"/>
+    <path d="M 430,500 Q 480,525 500,500 Q 480,475 430,500 Z" fill="#D4AF37"/>
+    <path d="M 570,500 Q 520,525 500,500 Q 520,475 570,500 Z" fill="#D4AF37"/>
+    <path d="M 450,450 Q 495,475 500,500 Q 475,495 450,450 Z" fill="#F3E19C"/>
+    <path d="M 550,450 Q 525,495 500,500 Q 505,475 550,450 Z" fill="#F3E19C"/>
+    <path d="M 450,550 Q 475,505 500,500 Q 495,525 450,550 Z" fill="#F3E19C"/>
+    <path d="M 550,550 Q 505,525 500,500 Q 525,505 550,550 Z" fill="#F3E19C"/>
+  </g>
+  <circle cx="500" cy="500" r="16" fill="#8B1E1E" stroke="#FAF5E8" stroke-width="2"/>
+  <circle cx="500" cy="500" r="6" fill="#FFEAA7"/>
+
+  <!-- Archival Metadata Bottom Banner -->
+  <rect x="180" y="895" width="640" height="38" rx="6" fill="#0A0D12" stroke="#D4AF37" stroke-width="2"/>
+  <text x="500" y="920" font-family="'Cinzel', 'Georgia', serif" font-size="12" fill="#E8DEC8" text-anchor="middle" letter-spacing="3">
+    TRADITIONAL ILLUMINATION • MASTER LESSON 1.1 • WEBAR ACTIVE TARGET
+  </text>
+</svg>

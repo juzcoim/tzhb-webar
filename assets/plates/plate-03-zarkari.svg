@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF0A0"/>
+      <stop offset="30%" stop-color="#D4AF37"/>
+      <stop offset="70%" stop-color="#A27818"/>
+      <stop offset="100%" stop-color="#E5C158"/>
+    </linearGradient>
+    <radialGradient id="deepLapis" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1B3A64"/>
+      <stop offset="100%" stop-color="#0A1626"/>
+    </radialGradient>
+    <pattern id="girihGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <rect width="60" height="60" fill="#0E223D"/>
+      <path d="M 0,30 L 30,0 L 60,30 L 30,60 Z" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.4"/>
+      <circle cx="30" cy="30" r="3" fill="#D4AF37" opacity="0.7"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Vellum -->
+  <rect width="1000" height="1000" fill="#FBF7EE"/>
+
+  <!-- Outer Heavy Black Tahrir Border -->
+  <rect x="30" y="30" width="940" height="940" fill="none" stroke="#090B0E" stroke-width="10"/>
+  <rect x="46" y="46" width="908" height="908" fill="none" stroke="#D4AF37" stroke-width="4"/>
+  <rect x="58" y="58" width="884" height="884" fill="url(#girihGrid)" stroke="#090B0E" stroke-width="2"/>
+
+  <!-- Top Title Plaque -->
+  <rect x="180" y="75" width="640" height="42" rx="6" fill="#090B0E" stroke="#D4AF37" stroke-width="2"/>
+  <text x="500" y="103" font-family="'Cinzel', 'Georgia', serif" font-size="14" font-weight="bold" fill="#F8E7A2" text-anchor="middle" letter-spacing="4">
+    TAZHEEB CURRICULUM • PLATE 03: ZARKARI &amp; GILDING
+  </text>
+
+  <!-- Central Sarlowh (Illuminated Dome / Mihrab Arch Structure) -->
+  <g id="sarlowh-arch">
+    <!-- Base field -->
+    <path d="M 120,840 L 120,400 Q 120,240 500,160 Q 880,240 880,400 L 880,840 Z" 
+          fill="url(#deepLapis)" stroke="#D4AF37" stroke-width="6"/>
+    <path d="M 140,820 L 140,410 Q 140,260 500,190 Q 860,260 860,410 L 860,820 Z" 
+          fill="none" stroke="#FAF5E8" stroke-width="2" stroke-dasharray="6,6"/>
+
+    <!-- Arch Crest Finials -->
+    <polygon points="500,120 480,160 520,160" fill="#D4AF37" stroke="#090B0E" stroke-width="2"/>
+    <circle cx="500" cy="115" r="8" fill="#8B1E1E" stroke="#FAF5E8" stroke-width="2"/>
+  </g>
+
+  <!-- Central Toranj (Almond/Diamond Medallion) -->
+  <g transform="translate(500, 520)" id="central-toranj" stroke="#090B0E" stroke-width="2">
+    <!-- Outer gold mandorla -->
+    <path d="M 0,-240 C 180,-120 180,120 0,240 C -180,120 -180,-120 0,-240 Z" 
+          fill="url(#goldSheen)" stroke="#090B0E" stroke-width="5"/>
+    
+    <!-- Inner Lapis Field -->
+    <path d="M 0,-200 C 140,-100 140,100 0,200 C -140,100 -140,-100 0,-200 Z" 
+          fill="#10253F" stroke="#FBF7EE" stroke-width="2"/>
+
+    <!-- Inner Golden 12-pointed Rosette -->
+    <circle cx="0" cy="0" r="80" fill="url(#goldSheen)" stroke="#090B0E" stroke-width="3"/>
+    <circle cx="0" cy="0" r="65" fill="#8B1E1E" stroke="#FAF5E8" stroke-width="2"/>
+    <circle cx="0" cy="0" r="30" fill="#10253F" stroke="#D4AF37" stroke-width="2"/>
+    <circle cx="0" cy="0" r="12" fill="#FAF5E8"/>
+
+    <!-- Radiating Diamond Spikes on Toranj -->
+    <polygon points="0,-250 -12,-230 12,-230" fill="#8B1E1E"/>
+    <polygon points="0,250 -12,230 12,230" fill="#8B1E1E"/>
+    <polygon points="-190,0 -170,-12 -170,12" fill="#8B1E1E"/>
+    <polygon points="190,0 170,-12 170,12" fill="#8B1E1E"/>
+  </g>
+
+  <!-- Side Inscription Cartouches (Left and Right) -->
+  <g id="side-plaques">
+    <rect x="160" y="380" width="40" height="280" rx="8" fill="#D4AF37" stroke="#090B0E" stroke-width="3"/>
+    <rect x="800" y="380" width="40" height="280" rx="8" fill="#D4AF37" stroke="#090B0E" stroke-width="3"/>
+    <circle cx="180" cy="400" r="8" fill="#8B1E1E"/><circle cx="180" cy="640" r="8" fill="#8B1E1E"/>
+    <circle cx="820" cy="400" r="8" fill="#8B1E1E"/><circle cx="820" cy="640" r="8" fill="#8B1E1E"/>
+  </g>
+
+  <!-- Lower Inscription &amp; Archival Marker -->
+  <rect x="180" y="880" width="640" height="42" rx="6" fill="#090B0E" stroke="#D4AF37" stroke-width="2"/>
+  <text x="500" y="908" font-family="'Cinzel', 'Georgia', serif" font-size="12" fill="#E8DEC8" text-anchor="middle" letter-spacing="3">
+    TRADITIONAL ILLUMINATION • MASTER LESSON 3.1 • WEBAR ACTIVE TARGET
+  </text>
+</svg>

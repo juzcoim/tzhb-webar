@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindAR Target Compiler • Tazheeb Pipeline</title>
+  <style>
+    :root {
+      --bg: #090B0E;
+      --card: #121822;
+      --gold: #D4AF37;
+      --gold-light: #F6E27A;
+      --text: #FAF6EE;
+      --dim: #8B949E;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 32px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    h1 {
+      font-family: 'Cinzel', 'Georgia', serif;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+    }
+    p {
+      color: var(--dim);
+      margin-bottom: 24px;
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .targets-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .target-item {
+      background: #07090C;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .target-item img {
+      width: 100%;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      background: #1a1e27;
+    }
+    .target-title {
+      font-size: 11px;
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .progress-bar-container {
+      width: 100%;
+      height: 12px;
+      background: #07090C;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .progress-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #C59B27, #F6E27A);
+      transition: width 0.1s ease;
+    }
+    .btn {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #FFF0A0 0%, #D4AF37 50%, #8C6514 100%);
+      border: none;
+      border-radius: 8px;
+      color: #090B0E;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .log-box {
+      background: #050608;
+      border: 1px solid #1a2230;
+      border-radius: 8px;
+      padding: 14px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #A0AEC0;
+      max-height: 240px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>MindAR Target Compiler Pipeline</h1>
+  <p>Compiles Tazheeb printed curriculum plates into a high-performance <code>targets.mind</code> binary tracking map.</p>
+
+  <div class="panel">
+    <div class="targets-list">
+      <div class="target-item">
+        <img src="./assets/plates/plate-01-shamsa.png" alt="Plate 01">
+        <div class="target-title">Target 0: Shamsa</div>
+      </div>
+      <div class="target-item">
+        <img src="./assets/plates/plate-02-islimi.png" alt="Plate 02">
+        <div class="target-title">Target 1: Islimi</div>
+      </div>
+      <div class="target-item">
+        <img src="./assets/plates/plate-03-zarkari.png" alt="Plate 03">
+        <div class="target-title">Target 2: Zarkari</div>
+      </div>
+    </div>
+
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+
+    <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px;">
+      <button class="btn" id="start-btn" type="button">Compile targets.mind</button>
+      <span id="progress-label" style="font-size: 12px; color: var(--gold);">Ready to compile</span>
+    </div>
+
+    <div class="log-box" id="log-box">Initialized compiler interface.\n</div>
+  </div>
+
+  <script type="module">
+    import { Compiler } from './assets/vendor/mindar-image.prod.js';
+
+    const logBox = document.getElementById('log-box');
+    const progressFill = document.getElementById('progress-fill');
+    const progressLabel = document.getElementById('progress-label');
+    const startBtn = document.getElementById('start-btn');
+
+    function log(msg) {
+      logBox.textContent += msg + '\n';
+      logBox.scrollTop = logBox.scrollHeight;
+      console.log(msg);
+    }
+
+    async function loadImage(url) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error('Failed to load image: ' + url));
+        img.src = url;
+      });
+    }
+
+    async function runCompilation() {
+      startBtn.disabled = true;
+      log('Starting MindAR image target compiler...');
+
+      const targetUrls = [
+        './assets/plates/plate-01-shamsa.png',
+        './assets/plates/plate-02-islimi.png',
+        './assets/plates/plate-03-zarkari.png'
+      ];
+
+      try {
+        log('Loading plate images into HTML memory...');
+        const images = await Promise.all(targetUrls.map(url => loadImage(url)));
+        log(`Loaded ${images.length} target images successfully.`);
+
+        const compiler = new Compiler();
+        log('Extracting feature descriptors across scale octaves (Gaussian pyramid)...');
+
+        await compiler.compileImageTargets(images, (progress) => {
+          const pct = Math.round(progress);
+          progressFill.style.width = pct + '%';
+          progressLabel.textContent = `Compiling: ${pct}%`;
+        });
+
+        log('Compilation completed 100%! Exporting binary buffer...');
+        const buffer = await compiler.exportData();
+        log(`Generated targets.mind binary: ${buffer.byteLength} bytes.`);
+
+        // Download or post to local server
+        const blob = new Blob([buffer], { type: 'application/octet-stream' });
+        
+        // Auto-save via POST to local server if supported
+        try {
+          const resp = await fetch('/save-targets', { method: 'POST', body: blob });
+          if (resp.ok) {
+            log('✓ Successfully saved directly to assets/targets/targets.mind on local server!');
+          }
+        } catch (e) {
+          log('Local server upload not active, downloading file directly.');
+        }
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'targets.mind';
+        link.click();
+        log('Triggered browser download: targets.mind');
+        progressLabel.textContent = 'Compilation Complete!';
+      } catch (err) {
+        log('ERROR: ' + err.message);
+        console.error(err);
+      } finally {
+        startBtn.disabled = false;
+      }
+    }
+
+    startBtn.addEventListener('click', runCompilation);
+
+    // Auto-start if URL has ?autostart=1
+    if (new URLSearchParams(window.location.search).has('autostart')) {
+      setTimeout(runCompilation, 400);
+    }
+
+    // Expose for headless automation
+    window.__runMindARCompilation = runCompilation;
+  </script>
+</body>
+</html>
+
