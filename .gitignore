@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Local SSL Certificates (re-generated automatically on local server start)
+.certs/*.key
+.certs/*.crt
+.certs/*.cnf
+
+# Logs & temp files
+*.log
+.DS_Store
+.compile-runner.html
+/tmp/
