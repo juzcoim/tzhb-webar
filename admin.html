@@ -91,17 +91,19 @@
       </div>
     </section>
 
-    <!-- Panel 1: Add New Curriculum Plate -->
-    <section class="panel">
+    <!-- Panel 1: Add or Edit Curriculum Plate -->
+    <section class="panel" id="plate-form-panel">
       <div class="panel-header">
         <h2 class="panel-title">
-          <span>➕</span>
-          <span>Add New Curriculum Plate &amp; Master Video</span>
+          <span id="form-icon">➕</span>
+          <span id="form-title-text">Add New Curriculum Plate &amp; Master Video</span>
         </h2>
-        <span style="font-size: 12px; color: var(--text-muted);">Uploaded plate will compile automatically into MindAR AR targets</span>
+        <span style="font-size: 12px; color: var(--text-muted);" id="form-subtitle">Uploaded plate will compile automatically into MindAR AR targets</span>
       </div>
 
       <form id="add-plate-form">
+        <input type="hidden" id="edit-plate-index" value="-1">
+
         <!-- Media Dropzones -->
         <div class="dropzone-container">
           
@@ -160,9 +162,12 @@
 
         </div>
 
-        <div style="display: flex; gap: 14px; align-items: center; margin-top: 10px;">
+        <div style="display: flex; gap: 14px; align-items: center; margin-top: 10px; flex-wrap: wrap;">
           <button type="submit" class="btn btn-primary" id="btn-submit-plate">
-            <span>✨ Save Plate &amp; Recompile MindAR</span>
+            <span id="btn-submit-text">✨ Save Plate &amp; Recompile MindAR</span>
+          </button>
+          <button type="button" class="btn btn-danger" id="btn-cancel-edit" style="display: none;">
+            <span>✖ Cancel Edit</span>
           </button>
           <button type="button" class="btn btn-secondary" id="btn-recompile-only">
             <span>⚙️ Recompile Targets Only</span>

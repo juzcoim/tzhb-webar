@@ -12,6 +12,7 @@
   // Application State
   const state = {
     curriculum: [],
+    editingIndex: -1,
     uploadedImageBase64: null,
     uploadedImageName: null,
     uploadedVideoBase64: null,
@@ -27,6 +28,13 @@
     telemetryCount: document.getElementById('telemetry-plates-count'),
     telemetrySize: document.getElementById('telemetry-targets-size'),
     addForm: document.getElementById('add-plate-form'),
+    editIndexInput: document.getElementById('edit-plate-index'),
+    formIcon: document.getElementById('form-icon'),
+    formTitleText: document.getElementById('form-title-text'),
+    formSubtitle: document.getElementById('form-subtitle'),
+    btnSubmitText: document.getElementById('btn-submit-text'),
+    btnCancelEdit: document.getElementById('btn-cancel-edit'),
+    plateFormPanel: document.getElementById('plate-form-panel'),
     btnSubmit: document.getElementById('btn-submit-plate'),
     btnRecompile: document.getElementById('btn-recompile-only'),
     btnPublish: document.getElementById('btn-publish-github'),
@@ -190,7 +198,7 @@
           <video src="${vidSrc}" controls playsinline id="vid-preview-${idx}"></video>
         </div>
         <div class="card-body">
-          <div class="card-lesson">${plate.chapter.split(':')[0]} • ${plate.lesson}</div>
+          <div class="card-lesson">${plate.chapter ? plate.chapter.split(':')[0] : 'Lesson'} • ${plate.lesson}</div>
           <h3 class="card-title">${plate.title}</h3>
           <div class="card-arabic">${plate.arabic || ''}</div>
           <p class="card-desc">${plate.description}</p>
@@ -198,8 +206,8 @@
             <button class="btn btn-secondary btn-toggle-media" data-idx="${idx}" type="button" style="padding: 4px 10px; font-size: 11px;">
               Toggle Video / Drawing
             </button>
-            <button class="btn btn-danger btn-delete-plate" data-idx="${idx}" type="button" style="padding: 4px 10px; font-size: 11px;">
-              Delete Plate
+            <button class="btn btn-primary btn-edit-plate" data-idx="${idx}" type="button" style="padding: 4px 12px; font-size: 11px;">
+              ✏️ Edit Plate
             </button>
           </div>
         </div>
@@ -221,12 +229,86 @@
         }
       });
 
-      // Delete listener
-      const deleteBtn = card.querySelector('.btn-delete-plate');
-      deleteBtn.addEventListener('click', () => deletePlate(idx, plate.title));
+      // Edit listener
+      const editBtn = card.querySelector('.btn-edit-plate');
+      editBtn.addEventListener('click', () => startEditPlate(idx));
 
       dom.platesGrid.appendChild(card);
     });
+  }
+
+  /**
+   * Start editing an existing plate
+   */
+  function startEditPlate(idx) {
+    const plate = state.curriculum[idx];
+    if (!plate) return;
+
+    state.editingIndex = idx;
+    if (dom.editIndexInput) dom.editIndexInput.value = idx;
+
+    // Fill metadata inputs
+    dom.fieldTitle.value = plate.title || '';
+    dom.fieldArabic.value = plate.arabic || '';
+    dom.fieldChapter.value = plate.chapter || '';
+    dom.fieldLesson.value = plate.lesson || '';
+    dom.fieldTopics.value = Array.isArray(plate.topics) ? plate.topics.join(', ') : (plate.topics || '');
+    dom.fieldDesc.value = plate.description || '';
+
+    // Show current media previews
+    const imgSrc = plate.vectorFile ? `./assets/plates/${plate.vectorFile}` : `./assets/plates/${plate.imageFile}`;
+    dom.previewImage.src = imgSrc;
+    dom.previewImage.style.display = 'block';
+
+    const vidSrc = `./assets/videos/${plate.videoFile}`;
+    dom.previewVideo.src = vidSrc;
+    dom.previewVideo.style.display = 'block';
+
+    // Clear staged base64 so existing files are preserved unless replaced
+    state.uploadedImageBase64 = null;
+    state.uploadedImageName = null;
+    state.uploadedVideoBase64 = null;
+    state.uploadedVideoName = null;
+
+    // Update UI headers and buttons
+    if (dom.formIcon) dom.formIcon.textContent = '✏️';
+    if (dom.formTitleText) dom.formTitleText.textContent = `Edit Plate ${idx + 1}: ${plate.title}`;
+    if (dom.formSubtitle) dom.formSubtitle.textContent = 'Update details below. Drop a new image or video only if you want to replace existing files.';
+    if (dom.btnSubmitText) dom.btnSubmitText.textContent = '💾 Update Plate & Sync';
+    if (dom.btnCancelEdit) dom.btnCancelEdit.style.display = 'inline-flex';
+
+    // Scroll to the edit panel
+    if (dom.plateFormPanel) {
+      dom.plateFormPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    log(`[Edit Mode] Editing Plate ${idx + 1}: "${plate.title}". Modify fields and save.`);
+  }
+
+  /**
+   * Cancel edit mode and return to new plate mode
+   */
+  function cancelEdit() {
+    state.editingIndex = -1;
+    if (dom.editIndexInput) dom.editIndexInput.value = -1;
+
+    dom.addForm.reset();
+    dom.previewImage.src = '';
+    dom.previewImage.style.display = 'none';
+    dom.previewVideo.src = '';
+    dom.previewVideo.style.display = 'none';
+
+    state.uploadedImageBase64 = null;
+    state.uploadedImageName = null;
+    state.uploadedVideoBase64 = null;
+    state.uploadedVideoName = null;
+
+    if (dom.formIcon) dom.formIcon.textContent = '➕';
+    if (dom.formTitleText) dom.formTitleText.textContent = 'Add New Curriculum Plate & Master Video';
+    if (dom.formSubtitle) dom.formSubtitle.textContent = 'Uploaded plate will compile automatically into MindAR AR targets';
+    if (dom.btnSubmitText) dom.btnSubmitText.textContent = '✨ Save Plate & Recompile MindAR';
+    if (dom.btnCancelEdit) dom.btnCancelEdit.style.display = 'none';
+
+    log('Cancelled edit mode. Returned to new plate registration.');
   }
 
   /**
@@ -317,64 +399,113 @@
    * Handle Plate Form Submission
    */
   async function setupForm() {
+    // Cancel Edit button
+    if (dom.btnCancelEdit) {
+      dom.btnCancelEdit.addEventListener('click', cancelEdit);
+    }
+
     dom.addForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      if (!state.uploadedImageBase64) {
-        alert('Please upload a plate drawing illustration.');
-        return;
-      }
-      if (!state.uploadedVideoBase64) {
-        alert('Please upload an instructional master video.');
-        return;
-      }
+      if (state.editingIndex >= 0) {
+        // === EDIT MODE ===
+        setProcessing(true, 'Updating curriculum plate...');
+        log(`Updating plate ${state.editingIndex}: "${dom.fieldTitle.value}"...`);
 
-      setProcessing(true, 'Uploading and saving curriculum plate...');
-      log(`Saving new plate: "${dom.fieldTitle.value}"...`);
+        const payload = {
+          index: state.editingIndex,
+          title: dom.fieldTitle.value,
+          arabic: dom.fieldArabic.value,
+          chapter: dom.fieldChapter.value,
+          chapterId: 'ch' + (state.editingIndex + 1),
+          lesson: dom.fieldLesson.value,
+          topics: dom.fieldTopics.value,
+          description: dom.fieldDesc.value,
+          imageFileName: state.uploadedImageName,
+          imageBase64: state.uploadedImageBase64,
+          videoFileName: state.uploadedVideoName,
+          videoBase64: state.uploadedVideoBase64
+        };
 
-      const payload = {
-        title: dom.fieldTitle.value,
-        arabic: dom.fieldArabic.value,
-        chapter: dom.fieldChapter.value,
-        chapterId: 'ch' + (state.curriculum.length + 1),
-        lesson: dom.fieldLesson.value,
-        topics: dom.fieldTopics.value,
-        description: dom.fieldDesc.value,
-        imageFileName: state.uploadedImageName,
-        imageBase64: state.uploadedImageBase64,
-        videoFileName: state.uploadedVideoName,
-        videoBase64: state.uploadedVideoBase64
-      };
+        try {
+          const res = await safeFetchJson('./api/update-plate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
 
-      try {
-        await safeFetchJson('./api/upload-plate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+          log(`Plate "${payload.title}" updated successfully! Automatically synced index.html and portal.html.`);
+          showToast(`Plate "${payload.title}" updated successfully!`);
 
-        log(`Saved plate "${payload.title}" successfully! Automatically synced index.html and portal.html.`);
-        showToast(`Plate "${payload.title}" created successfully!`);
+          const needRecompile = !!res.imageChanged;
+          cancelEdit();
+          await loadCurriculum();
 
-        // Reset form
-        dom.addForm.reset();
-        dom.previewImage.style.display = 'none';
-        dom.previewVideo.style.display = 'none';
-        state.uploadedImageBase64 = null;
-        state.uploadedVideoBase64 = null;
+          if (needRecompile) {
+            log('Plate artwork was replaced. Automatic MindAR target recompilation required...');
+            await recompileTargets();
+          }
+        } catch (err) {
+          log(`Update failed: ${err.message}`);
+          showToast(`Update failed: ${err.message}`, true);
+        } finally {
+          setProcessing(false);
+        }
 
-        // Reload curriculum
-        await loadCurriculum();
+      } else {
+        // === CREATE NEW PLATE MODE ===
+        if (!state.uploadedImageBase64) {
+          alert('Please upload a plate drawing illustration.');
+          return;
+        }
+        if (!state.uploadedVideoBase64) {
+          alert('Please upload an instructional master video.');
+          return;
+        }
 
-        // Automatically trigger MindAR compilation
-        setProcessing(true, 'Compiling MindAR target binary...');
-        await recompileTargets();
+        setProcessing(true, 'Uploading and saving curriculum plate...');
+        log(`Saving new plate: "${dom.fieldTitle.value}"...`);
 
-      } catch (err) {
-        log(`Upload failed: ${err.message}`);
-        showToast(err.message, true);
-      } finally {
-        setProcessing(false);
+        const payload = {
+          title: dom.fieldTitle.value,
+          arabic: dom.fieldArabic.value,
+          chapter: dom.fieldChapter.value,
+          chapterId: 'ch' + (state.curriculum.length + 1),
+          lesson: dom.fieldLesson.value,
+          topics: dom.fieldTopics.value,
+          description: dom.fieldDesc.value,
+          imageFileName: state.uploadedImageName,
+          imageBase64: state.uploadedImageBase64,
+          videoFileName: state.uploadedVideoName,
+          videoBase64: state.uploadedVideoBase64
+        };
+
+        try {
+          await safeFetchJson('./api/upload-plate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          log(`Saved plate "${payload.title}" successfully! Automatically synced index.html and portal.html.`);
+          showToast(`Plate "${payload.title}" created successfully!`);
+
+          // Reset form
+          cancelEdit();
+
+          // Reload curriculum
+          await loadCurriculum();
+
+          // Automatically trigger MindAR compilation
+          setProcessing(true, 'Compiling MindAR target binary...');
+          await recompileTargets();
+
+        } catch (err) {
+          log(`Upload failed: ${err.message}`);
+          showToast(err.message, true);
+        } finally {
+          setProcessing(false);
+        }
       }
     });
 

@@ -193,7 +193,93 @@ function handleStaticRequest(req, res) {
     return;
   }
 
-  // 3. DELETE /api/plates/:index
+  // 3. POST /api/update-plate (or PUT /api/plates/:index)
+  if (((pathname.startsWith('/api/plates/') && req.method === 'PUT') || (pathname === '/api/update-plate' && req.method === 'POST'))) {
+    parseJsonBody(req, (err, payload) => {
+      if (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ error: err.message }));
+      }
+
+      try {
+        let curriculum = [];
+        if (fs.existsSync(CURRICULUM_FILE)) {
+          curriculum = JSON.parse(fs.readFileSync(CURRICULUM_FILE, 'utf8'));
+        }
+
+        const targetIdx = payload.index !== undefined ? parseInt(payload.index, 10) : parseInt(pathname.split('/').pop(), 10);
+        if (isNaN(targetIdx) || targetIdx < 0 || targetIdx >= curriculum.length) {
+          res.writeHead(404, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ error: 'Plate index not found' }));
+        }
+
+        const plate = curriculum[targetIdx];
+        const {
+          title,
+          arabic,
+          chapter,
+          chapterId,
+          lesson,
+          topics,
+          description,
+          imageFileName,
+          imageBase64,
+          videoFileName,
+          videoBase64
+        } = payload;
+
+        let imageChanged = false;
+
+        // If new image is uploaded
+        if (imageBase64) {
+          const slug = (title || plate.title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          const cleanImgName = imageFileName ? path.basename(imageFileName).replace(/\s+/g, '-') : `${slug}-${Date.now()}.png`;
+          const imgBuffer = Buffer.from(imageBase64.replace(/^data:image\/\w+;base64,/, ''), 'base64');
+          fs.writeFileSync(path.join(PLATES_DIR, cleanImgName), imgBuffer);
+          plate.imageFile = cleanImgName;
+          plate.vectorFile = null;
+          imageChanged = true;
+        }
+
+        // If new video is uploaded
+        if (videoBase64) {
+          const slug = (title || plate.title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          const cleanVidName = videoFileName ? path.basename(videoFileName).replace(/\s+/g, '-') : `${slug}-${Date.now()}.mp4`;
+          const vidBuffer = Buffer.from(videoBase64.replace(/^data:video\/\w+;base64,/, ''), 'base64');
+          fs.writeFileSync(path.join(VIDEOS_DIR, cleanVidName), vidBuffer);
+          plate.videoFile = cleanVidName;
+        }
+
+        // Update textual metadata
+        if (title) plate.title = title.trim();
+        if (arabic !== undefined) plate.arabic = arabic.trim();
+        if (chapter) plate.chapter = chapter.trim();
+        if (chapterId) plate.chapterId = chapterId.trim();
+        if (lesson) plate.lesson = lesson.trim();
+        if (description !== undefined) plate.description = description.trim();
+        if (topics !== undefined) {
+          plate.topics = Array.isArray(topics) ? topics : topics.split(',').map(t => t.trim()).filter(Boolean);
+        }
+
+        // Save curriculum.json
+        fs.writeFileSync(CURRICULUM_FILE, JSON.stringify(curriculum, null, 2), 'utf8');
+
+        // Automatically sync static HTML files
+        syncCurriculum();
+
+        console.log(`✏️ Updated plate index ${targetIdx}: "${plate.title}" (Image changed: ${imageChanged})`);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, plate, imageChanged }));
+      } catch (e) {
+        console.error('Error updating plate:', e);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: e.message }));
+      }
+    });
+    return;
+  }
+
+  // 4. DELETE /api/plates/:index
   if (pathname.startsWith('/api/plates/') && req.method === 'DELETE') {
     const targetIdx = parseInt(pathname.split('/').pop(), 10);
     if (isNaN(targetIdx)) {
