@@ -87,6 +87,9 @@ function handleStaticRequest(req, res) {
 
   const parsedUrl = url.parse(req.url, true);
   let pathname = decodeURIComponent(parsedUrl.pathname);
+  // Strip GitHub repository subpath prefix if present
+  pathname = pathname.replace(/^\/tzhb-webar/, '');
+  if (pathname === '' || pathname === '/') pathname = '/index.html';
 
   // ==========================================================================
   // ADMIN PORTAL REST API ENDPOINTS

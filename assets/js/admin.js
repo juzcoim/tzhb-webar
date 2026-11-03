@@ -16,11 +16,13 @@
     uploadedImageName: null,
     uploadedVideoBase64: null,
     uploadedVideoName: null,
-    isProcessing: false
+    isProcessing: false,
+    isLocalServer: false
   };
 
   // DOM Elements
   const dom = {
+    envBanner: document.getElementById('env-banner'),
     platesGrid: document.getElementById('plates-grid'),
     telemetryCount: document.getElementById('telemetry-plates-count'),
     telemetrySize: document.getElementById('telemetry-targets-size'),
@@ -65,7 +67,84 @@
     dom.toastIcon.textContent = isError ? '⚠️' : '✅';
     dom.toastMsg.textContent = message;
     dom.toast.classList.add('show');
-    setTimeout(() => dom.toast.classList.remove('show'), 4000);
+    setTimeout(() => dom.toast.classList.remove('show'), 4500);
+  }
+
+  /**
+   * Safe fetch with robust JSON and HTML error response handling
+   */
+  async function safeFetchJson(url, options = {}) {
+    const res = await fetch(url, options);
+    const text = await res.text();
+
+    // Check if the server returned an HTML error page (e.g. 404 from GitHub Pages)
+    if (text.trim().startsWith('<')) {
+      if (window.location.hostname.includes('github.io')) {
+        throw new Error(
+          'Cloud Static Hosting Detected: GitHub Pages cannot run server-side upload APIs. Please run "npm start" on your computer and open https://localhost:8443/admin.html to add plates and compile AR targets.'
+        );
+      } else {
+        throw new Error(`Server returned HTML (${res.status}). Please verify that local server is running on https://localhost:8443.`);
+      }
+    }
+
+    let data;
+    try {
+      data = text ? JSON.parse(text) : {};
+    } catch (e) {
+      throw new Error(`Invalid JSON response: ${text.slice(0, 100)}`);
+    }
+
+    if (!res.ok) {
+      throw new Error(data.error || `HTTP ${res.status}`);
+    }
+
+    return data;
+  }
+
+  /**
+   * Detect whether running on local Node server or static GitHub Pages
+   */
+  function checkEnvironment() {
+    const host = window.location.hostname;
+    const isLocal = host === 'localhost' || host === '127.0.0.1' || host.startsWith('192.168.') || host.startsWith('10.') || window.location.port === '8443';
+    state.isLocalServer = isLocal;
+
+    if (!isLocal) {
+      // Cloud Static Notice on GitHub Pages
+      dom.envBanner.style.display = 'block';
+      dom.envBanner.innerHTML = `
+        <div style="background: rgba(230, 126, 34, 0.15); border: 1px solid #E67E22; border-radius: 10px; padding: 16px 20px; display: flex; align-items: flex-start; gap: 14px;">
+          <span style="font-size: 26px;">☁️</span>
+          <div>
+            <div style="font-weight: 700; color: #F39C12; font-size: 15px; margin-bottom: 4px;">Viewing on GitHub Pages (Cloud Static Hosting)</div>
+            <div style="font-size: 13px; color: #E2E8F0; line-height: 1.5;">
+              GitHub Pages is a static host without a backend to write files or run the MindAR compiler.
+              <br>
+              👉 To add new plates, upload videos, and compile AR targets, open the Admin Portal on your local computer:
+              <br>
+              <a href="https://localhost:8443/admin.html" target="_blank" style="display: inline-block; margin-top: 6px; padding: 6px 12px; background: var(--gold-gradient); color: #090B0E; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 12px;">
+                Open Local Studio Server: https://localhost:8443/admin.html
+              </a>
+              <span style="margin-left: 8px; font-size: 12px; color: var(--text-muted);">(Run <code>npm start</code> in your project directory)</span>
+            </div>
+          </div>
+        </div>
+      `;
+      log('[Notice] Running on static GitHub Pages. File upload & compilation APIs require local server at https://localhost:8443');
+    } else {
+      // Local Studio Server Active
+      dom.envBanner.style.display = 'block';
+      dom.envBanner.innerHTML = `
+        <div style="background: rgba(0, 184, 148, 0.12); border: 1px solid #00B894; border-radius: 10px; padding: 12px 18px; display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 18px;">🟢</span>
+          <span style="font-size: 13px; color: #55EFC4;">
+            <strong>Local Studio Server Active:</strong> Full filesystem access, automated MindAR compiler, and 1-click GitHub deployment are connected.
+          </span>
+        </div>
+      `;
+      log('[Ready] Connected to local HTTPS service at https://localhost:8443');
+    }
   }
 
   /**
@@ -160,14 +239,11 @@
 
     try {
       log(`Deleting plate ${index}: "${title}"...`);
-      const res = await fetch(`./api/plates/${index}`, { method: 'DELETE' });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Delete failed');
+      await safeFetchJson(`./api/plates/${index}`, { method: 'DELETE' });
 
       showToast(`Deleted "${title}" successfully.`);
       await loadCurriculum();
       
-      // Prompt user to recompile
       log('Curriculum sequence modified. Recompiling MindAR targets.mind...');
       recompileTargets();
     } catch (err) {
@@ -271,14 +347,11 @@
       };
 
       try {
-        const res = await fetch('./api/upload-plate', {
+        await safeFetchJson('./api/upload-plate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Failed to upload plate');
 
         log(`Saved plate "${payload.title}" successfully! Automatically synced index.html and portal.html.`);
         showToast(`Plate "${payload.title}" created successfully!`);
@@ -299,7 +372,7 @@
 
       } catch (err) {
         log(`Upload failed: ${err.message}`);
-        showToast(`Upload failed: ${err.message}`, true);
+        showToast(err.message, true);
       } finally {
         setProcessing(false);
       }
@@ -320,9 +393,7 @@
     log('Starting MindAR target compilation pipeline (executing Gaussian pyramid feature extractor)...');
 
     try {
-      const res = await fetch('./api/recompile', { method: 'POST' });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Compilation failed');
+      const data = await safeFetchJson('./api/recompile', { method: 'POST' });
 
       log(`Target compilation SUCCESS! targets.mind: ${(data.bytes / 1024).toFixed(1)} KB`);
       dom.telemetrySize.textContent = `${(data.bytes / 1024).toFixed(1)} KB`;
@@ -343,9 +414,7 @@
     log('Running: git add . && git commit && git push origin main...');
 
     try {
-      const res = await fetch('./api/publish', { method: 'POST' });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Deployment failed');
+      await safeFetchJson('./api/publish', { method: 'POST' });
 
       log('Deployment SUCCESS: Live GitHub Pages repository updated!');
       showToast('Successfully published to GitHub Pages!');
@@ -367,6 +436,7 @@
 
   // Initialize
   document.addEventListener('DOMContentLoaded', () => {
+    checkEnvironment();
     setupDropzones();
     setupForm();
     loadCurriculum();
