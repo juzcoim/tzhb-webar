@@ -55,6 +55,16 @@
             "arabic": "طرح چهارپر و حاشیه",
             "description": "Four-petal symmetrical motif (charpar) construction, axial corner quadrant ornamentation, and precision gold illumination techniques.",
             "videoId": "video-charpar"
+      },
+      {
+            "index": 4,
+            "id": "plate-05",
+            "title": "plate-05-panjpar",
+            "chapter": "Khatai - Gul - Gul e reez",
+            "lesson": "13",
+            "arabic": "پنج پر",
+            "description": "start with coloured guidline circles and then finish with black pencil outines.",
+            "videoId": "video-plate-05-panjpar"
       }
 ]
   };
