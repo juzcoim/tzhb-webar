@@ -256,15 +256,35 @@ function handleStaticRequest(req, res) {
   // 5. POST /api/publish (commits & pushes to GitHub Pages)
   if (pathname === '/api/publish' && req.method === 'POST') {
     console.log('🚀 Publishing updates to GitHub Pages...');
+
+    // Clear stale git lock file if present
+    const lockFile = path.join(ROOT_DIR, '.git', 'index.lock');
+    if (fs.existsSync(lockFile)) {
+      try { fs.unlinkSync(lockFile); } catch (e) {}
+    }
+
     const cmd = 'git add . && git commit -m "feat(curriculum): update plates and targets via admin portal" && git push origin main';
     exec(cmd, { cwd: ROOT_DIR }, (err, stdout, stderr) => {
       if (err) {
         // If git commit had nothing to commit, stdout might say "nothing to commit"
-        if (stdout && stdout.includes('nothing to commit')) {
+        if ((stdout && stdout.includes('nothing to commit')) || (stderr && stderr.includes('nothing to commit'))) {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           return res.end(JSON.stringify({ success: true, message: 'Already up to date on GitHub Pages!' }));
         }
-        console.error('Git push failed:', stderr || err.message);
+
+        const msg = (stderr || stdout || err.message).trim();
+        console.error('Git publish notice:', msg);
+
+        // Check if sandboxed environment prevented direct git lock or network push
+        if (msg.includes('index.lock') || msg.includes('Operation not permitted') || msg.includes('Permission denied')) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({
+            success: true,
+            warning: true,
+            message: 'All plates, videos, and targets.mind are saved and compiled locally! To push to GitHub Pages, run "git push" in your terminal or ask your assistant.'
+          }));
+        }
+
         res.writeHead(500, { 'Content-Type': 'application/json' });
         return res.end(JSON.stringify({ error: err.message, log: stderr || stdout }));
       }

@@ -414,10 +414,15 @@
     log('Running: git add . && git commit && git push origin main...');
 
     try {
-      await safeFetchJson('./api/publish', { method: 'POST' });
+      const data = await safeFetchJson('./api/publish', { method: 'POST' });
 
-      log('Deployment SUCCESS: Live GitHub Pages repository updated!');
-      showToast('Successfully published to GitHub Pages!');
+      if (data && data.warning) {
+        log(`[Notice] ${data.message}`);
+        showToast(data.message, false);
+      } else {
+        log('Deployment SUCCESS: Live GitHub Pages repository updated!');
+        showToast('Successfully published to GitHub Pages!');
+      }
     } catch (err) {
       log(`Deploy error: ${err.message}`);
       showToast(`Deploy failed: ${err.message}`, true);
