@@ -31,9 +31,11 @@ console.log('📜 Checking JavaScript files syntax:');
 const jsFiles = [
   'assets/js/app.js',
   'assets/js/portal.js',
+  'assets/js/admin.js',
   'scripts/generate-mocks.js',
   'scripts/generate-cert.js',
   'scripts/server.js',
+  'scripts/sync-curriculum.js',
   'scripts/compile-targets.js',
   'scripts/verify-streams.js'
 ];
@@ -50,7 +52,7 @@ jsFiles.forEach(rel => {
 
 // 2. Validate HTML files structure & relative paths
 console.log('\n📄 Checking HTML documents:');
-const htmlFiles = ['index.html', 'portal.html', 'compiler.html'];
+const htmlFiles = ['index.html', 'portal.html', 'compiler.html', 'admin.html'];
 
 htmlFiles.forEach(rel => {
   const fullPath = path.join(ROOT_DIR, rel);
@@ -84,7 +86,7 @@ htmlFiles.forEach(rel => {
 
 // 3. Validate CSS balanced braces
 console.log('\n🎨 Checking CSS stylesheets:');
-const cssFiles = ['assets/css/style.css', 'assets/css/portal.css'];
+const cssFiles = ['assets/css/style.css', 'assets/css/portal.css', 'assets/css/admin.css'];
 
 cssFiles.forEach(rel => {
   const fullPath = path.join(ROOT_DIR, rel);

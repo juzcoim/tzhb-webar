@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tazheeb Studio • Curriculum Admin Portal</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./assets/css/admin.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="admin-header">
+    <div class="brand-wrapper">
+      <div class="brand-emblem">
+        <div class="brand-emblem-inner"></div>
+      </div>
+      <div>
+        <div class="brand-title">Tazheeb Studio</div>
+        <div class="brand-subtitle">Curriculum Admin Portal</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <a href="./index.html" class="btn btn-secondary" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <span>Launch WebAR</span>
+      </a>
+      <a href="./portal.html" class="btn btn-secondary" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        <span>Archival Portal</span>
+      </a>
+      <button class="btn btn-success" id="btn-publish-github" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <span>Publish to GitHub Pages</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-container">
+
+    <!-- Status Telemetry Grid -->
+    <section class="status-grid">
+      <div class="status-card">
+        <div class="status-icon">🖼️</div>
+        <div>
+          <div class="status-label">Active Plates</div>
+          <div class="status-val" id="telemetry-plates-count">4 Plates</div>
+        </div>
+      </div>
+      <div class="status-card">
+        <div class="status-icon">🎯</div>
+        <div>
+          <div class="status-label">MindAR Binary</div>
+          <div class="status-val" id="telemetry-targets-size">1,862.4 KB</div>
+        </div>
+      </div>
+      <div class="status-card">
+        <div class="status-icon">⚡</div>
+        <div>
+          <div class="status-label">Tracking Pipeline</div>
+          <div class="status-val" style="color: #55EFC4;">ONLINE (v1.2.5)</div>
+        </div>
+      </div>
+      <div class="status-card">
+        <div class="status-icon">🌐</div>
+        <div>
+          <div class="status-label">Live Deployment</div>
+          <div class="status-val" style="font-size: 13px; color: var(--gold-text);">
+            <a href="https://juzcoim.github.io/tzhb-webar/" target="_blank" style="color: inherit; text-decoration: underline;">GitHub Pages</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel 1: Add New Curriculum Plate -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <span>➕</span>
+          <span>Add New Curriculum Plate &amp; Master Video</span>
+        </h2>
+        <span style="font-size: 12px; color: var(--text-muted);">Uploaded plate will compile automatically into MindAR AR targets</span>
+      </div>
+
+      <form id="add-plate-form">
+        <!-- Media Dropzones -->
+        <div class="dropzone-container">
+          
+          <!-- Image Dropzone -->
+          <div class="dropzone" id="dz-image" onclick="document.getElementById('input-image').click()">
+            <input type="file" id="input-image" accept="image/png,image/jpeg,image/webp">
+            <div class="dropzone-icon">📷</div>
+            <div class="dropzone-title">Plate Drawing Artwork</div>
+            <div class="dropzone-desc">Click or Drag &amp; Drop PNG / JPG (High Contrast)</div>
+            <img class="dropzone-preview" id="preview-image" alt="Drawing Preview">
+          </div>
+
+          <!-- Video Dropzone -->
+          <div class="dropzone" id="dz-video" onclick="document.getElementById('input-video').click()">
+            <input type="file" id="input-video" accept="video/mp4,video/quicktime">
+            <div class="dropzone-icon">🎬</div>
+            <div class="dropzone-title">Instructional Master Video</div>
+            <div class="dropzone-desc">Click or Drag &amp; Drop MP4 Video Stream</div>
+            <video class="dropzone-preview" id="preview-video" controls playsinline></video>
+          </div>
+
+        </div>
+
+        <!-- Metadata Form Fields -->
+        <div class="form-grid">
+          
+          <div class="form-group">
+            <label class="form-label" for="field-title">Plate Title *</label>
+            <input type="text" id="field-title" class="form-input" placeholder="e.g. Plate V: Shah Abbasi Floral" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="field-arabic">Arabic / Persian Calligraphic Title</label>
+            <input type="text" id="field-arabic" class="form-input" placeholder="e.g. گل شاه عباسی و حاشیه">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="field-chapter">Curriculum Chapter</label>
+            <input type="text" id="field-chapter" class="form-input" placeholder="e.g. Chapter V: Floral Motifs &amp; Palmettes" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="field-lesson">Master Lesson Number</label>
+            <input type="text" id="field-lesson" class="form-input" placeholder="e.g. Master Lesson 5.1" required>
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label" for="field-topics">Curriculum Topics (comma separated)</label>
+            <input type="text" id="field-topics" class="form-input" placeholder="e.g. Shah Abbasi, Lotus Palmette, Gold Inking, Agate Burnish">
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label" for="field-desc">Master Instructional Guidance &amp; Technique Notes</label>
+            <textarea id="field-desc" class="form-textarea" placeholder="Detailed manuscript illumination instructions, geometry guidelines, and pigment preparation details..." required></textarea>
+          </div>
+
+        </div>
+
+        <div style="display: flex; gap: 14px; align-items: center; margin-top: 10px;">
+          <button type="submit" class="btn btn-primary" id="btn-submit-plate">
+            <span>✨ Save Plate &amp; Recompile MindAR</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="btn-recompile-only">
+            <span>⚙️ Recompile Targets Only</span>
+          </button>
+          <span id="form-status-msg" style="font-size: 13px; color: var(--gold-text); font-weight: 500;"></span>
+        </div>
+      </form>
+    </section>
+
+    <!-- Panel 2: Curriculum Plates Sequence -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <span>📜</span>
+          <span>Active Curriculum Plates Registry</span>
+        </h2>
+        <span style="font-size: 12px; color: var(--text-muted);">Drag or manage sequence for WebAR camera tracking</span>
+      </div>
+
+      <div class="plates-admin-grid" id="plates-grid">
+        <!-- Rendered dynamically by assets/js/admin.js -->
+      </div>
+    </section>
+
+    <!-- Panel 3: Live Pipeline Console -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <span>🖥️</span>
+          <span>Pipeline &amp; Compilation Console</span>
+        </h2>
+        <button class="btn btn-secondary" type="button" onclick="document.getElementById('console-log').textContent=''" style="padding: 4px 10px; font-size: 11px;">Clear Log</button>
+      </div>
+
+      <div class="terminal-box" id="console-log">[Ready] Tazheeb Studio Admin Portal initialized.
+[Info] Connected to local HTTPS service at https://localhost:8443
+[Ready] Awaiting user actions.</div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div class="toast" id="admin-toast">
+    <span id="toast-icon">ℹ️</span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="./assets/js/admin.js"></script>
+</body>
+</html>

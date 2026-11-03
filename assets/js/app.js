@@ -17,46 +17,46 @@
     mediaPrimed: false,
     plates: [
       {
-        index: 0,
-        id: 'plate-01',
-        title: 'Plate I: The Eightfold Shamsa',
-        chapter: 'Chapter I: Radial Geometry & Groundwork',
-        lesson: 'Master Lesson 1.1',
-        arabic: 'شمسه هشت‌پر',
-        description: 'Octagonal star division, radiating 32-ray corona, and ground gesso preparation for shell gold gilding.',
-        videoId: 'video-shamsa'
+            "index": 0,
+            "id": "plate-01",
+            "title": "Plate I: The Eightfold Shamsa",
+            "chapter": "Chapter I: Radial Geometry & Groundwork",
+            "lesson": "Master Lesson 1.1",
+            "arabic": "شمسه هشت‌پر و هندسه دایره",
+            "description": "Constructing the foundational octagram star grid using compass division. Covers parchment preparation, ground gesso layering, and burnishing geometry for 32-ray radial burst coronas.",
+            "videoId": "video-shamsa"
       },
       {
-        index: 1,
-        id: 'plate-02',
-        title: 'Plate II: The Biomorphic Islimi',
-        chapter: 'Chapter II: Foliation & Arabesque',
-        lesson: 'Master Lesson 2.1',
-        arabic: 'اسلیمی و گل‌های خطایی',
-        description: 'Logarithmic golden spirals, Rumi split palmettes, and executing delicate tahrir black ink contouring.',
-        videoId: 'video-islimi'
+            "index": 1,
+            "id": "plate-02",
+            "title": "Plate II: The Biomorphic Islimi",
+            "chapter": "Chapter II: Foliation & Arabesque",
+            "lesson": "Master Lesson 2.1",
+            "arabic": "اسلیمی ساده، ماری و گل‌های خطایی",
+            "description": "Drafting harmonic logarithmic golden spirals with constant curvature. Demonstrates executing Rumi split-leaf palmettes and razor-sharp black ink tahrir contours with a sable brush.",
+            "videoId": "video-islimi"
       },
       {
-        index: 2,
-        id: 'plate-03',
-        title: 'Plate III: Zarkari Masterwork',
-        chapter: 'Chapter III: Gilding & Illumination',
-        lesson: 'Master Lesson 3.1',
-        arabic: 'زرکاری و لاجورد',
-        description: 'Agate burnishing for mirror gloss gold finish and genuine Afghan lapis lazuli pigment application.',
-        videoId: 'video-zarkari'
+            "index": 2,
+            "id": "plate-03",
+            "title": "Plate III: Zarkari Masterwork",
+            "chapter": "Chapter III: Gilding & Illumination",
+            "lesson": "Master Lesson 3.1",
+            "arabic": "زرکاری، سرلوح و رنگ‌گذاری لاجورد",
+            "description": "The grand illuminated manuscript sarlowh (frontispiece). Applying shell gold (morakkab), agate dog-tooth burnishing for mirror gloss reflections, and grinding pure lapis lazuli mineral pigment.",
+            "videoId": "video-zarkari"
       },
       {
-        index: 3,
-        id: 'plate-04',
-        title: 'Plate IV: Charpar Floral Motif',
-        chapter: 'Chapter IV: Floral Geometry & Cornerpieces',
-        lesson: 'Master Lesson 4.1',
-        arabic: 'طرح چهارپر',
-        description: 'Four-petal symmetrical floral geometry (charpar), corner quadrant composition, and gold embellishment.',
-        videoId: 'video-charpar'
+            "index": 3,
+            "id": "plate-04",
+            "title": "Plate IV: Charpar Floral Motif",
+            "chapter": "Chapter IV: Floral Geometry & Cornerpieces",
+            "lesson": "Master Lesson 4.1",
+            "arabic": "طرح چهارپر و حاشیه",
+            "description": "Four-petal symmetrical motif (charpar) construction, axial corner quadrant ornamentation, and precision gold illumination techniques.",
+            "videoId": "video-charpar"
       }
-    ]
+]
   };
 
   // DOM Elements cache

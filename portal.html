@@ -39,6 +39,13 @@
     </p>
 
     <div class="monograph-nav-actions">
+      <a href="./admin.html" class="portal-ar-btn" style="background: rgba(212, 175, 55, 0.15); border: 1px solid var(--border-gold); margin-right: 10px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span>Curriculum Admin</span>
+      </a>
       <a href="./index.html" class="portal-ar-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
@@ -56,10 +63,10 @@
     <div class="filter-toolbar">
       <div class="filter-pills">
         <button class="filter-pill active" data-filter="all" type="button">All Curriculum Plates (4)</button>
-        <button class="filter-pill" data-filter="ch1" type="button">Chapter I: Geometry</button>
-        <button class="filter-pill" data-filter="ch2" type="button">Chapter II: Foliation</button>
-        <button class="filter-pill" data-filter="ch3" type="button">Chapter III: Gilding</button>
-        <button class="filter-pill" data-filter="ch4" type="button">Chapter IV: Motifs</button>
+        <button class="filter-pill" data-filter="ch1" type="button">Chapter I</button>
+        <button class="filter-pill" data-filter="ch2" type="button">Chapter II</button>
+        <button class="filter-pill" data-filter="ch3" type="button">Chapter III</button>
+        <button class="filter-pill" data-filter="ch4" type="button">Chapter IV</button>
       </div>
       <div class="catalog-stats" id="visible-count">4 Plates Displayed</div>
     </div>
@@ -71,7 +78,7 @@
       <article class="plate-card" data-chapter="ch1">
         <div class="plate-media-wrapper">
           <video class="plate-video-player" src="./assets/videos/video-01-shamsa.mp4" controls preload="metadata" playsinline></video>
-          <img class="plate-image-preview hidden" src="./assets/plates/plate-01-shamsa.svg" alt="Plate 01: The Eightfold Shamsa" data-full-src="./assets/plates/plate-01-shamsa.svg">
+          <img class="plate-image-preview hidden" src="./assets/plates/plate-01-shamsa.svg" alt="Plate I: The Eightfold Shamsa" data-full-src="./assets/plates/plate-01-shamsa.svg">
           <div class="media-toggle-bar">
             <button class="media-toggle-btn btn-show-video active" type="button">Video</button>
             <button class="media-toggle-btn btn-show-image" type="button">Plate Drawing</button>
@@ -79,14 +86,12 @@
         </div>
         <div class="plate-content">
           <div class="plate-meta-row">
-            <span class="plate-lesson-tag">Chapter I • Lesson 1.1</span>
-            <span class="plate-duration">Master Video • 04:30</span>
+            <span class="plate-lesson-tag">Chapter I • Master Lesson 1.1</span>
+            <span class="plate-duration">Master Video • Live Media</span>
           </div>
           <h2 class="plate-name">The Eightfold Shamsa</h2>
           <div class="plate-arabic-label">شمسه هشت‌پر و هندسه دایره</div>
-          <p class="plate-desc">
-            Constructing the foundational octagram star grid using compass division. Covers parchment preparation, ground gesso layering, and burnishing geometry for 32-ray radial burst coronas.
-          </p>
+          <p class="plate-desc">Constructing the foundational octagram star grid using compass division. Covers parchment preparation, ground gesso layering, and burnishing geometry for 32-ray radial burst coronas.</p>
           <div class="plate-curriculum-topics">
             <span class="topic-tag">Radial Girih</span>
             <span class="topic-tag">Octagram Star</span>
@@ -97,7 +102,7 @@
             <button class="card-btn card-btn-primary btn-zoom-plate" data-full-src="./assets/plates/plate-01-shamsa.svg" type="button">
               Inspect Vector Plate
             </button>
-            <a href="./assets/videos/video-01-shamsa.mp4" download="plate-01-shamsa.mp4" class="card-btn card-btn-secondary">
+            <a href="./assets/videos/video-01-shamsa.mp4" download="video-01-shamsa.mp4" class="card-btn card-btn-secondary">
               Download Media
             </a>
           </div>
@@ -108,7 +113,7 @@
       <article class="plate-card" data-chapter="ch2">
         <div class="plate-media-wrapper">
           <video class="plate-video-player" src="./assets/videos/video-02-islimi.mp4" controls preload="metadata" playsinline></video>
-          <img class="plate-image-preview hidden" src="./assets/plates/plate-02-islimi.svg" alt="Plate 02: The Biomorphic Islimi" data-full-src="./assets/plates/plate-02-islimi.svg">
+          <img class="plate-image-preview hidden" src="./assets/plates/plate-02-islimi.svg" alt="Plate II: The Biomorphic Islimi" data-full-src="./assets/plates/plate-02-islimi.svg">
           <div class="media-toggle-bar">
             <button class="media-toggle-btn btn-show-video active" type="button">Video</button>
             <button class="media-toggle-btn btn-show-image" type="button">Plate Drawing</button>
@@ -116,14 +121,12 @@
         </div>
         <div class="plate-content">
           <div class="plate-meta-row">
-            <span class="plate-lesson-tag">Chapter II • Lesson 2.1</span>
-            <span class="plate-duration">Master Video • 04:30</span>
+            <span class="plate-lesson-tag">Chapter II • Master Lesson 2.1</span>
+            <span class="plate-duration">Master Video • Live Media</span>
           </div>
           <h2 class="plate-name">The Biomorphic Islimi</h2>
           <div class="plate-arabic-label">اسلیمی ساده، ماری و گل‌های خطایی</div>
-          <p class="plate-desc">
-            Drafting harmonic logarithmic golden spirals with constant curvature. Demonstrates executing Rumi split-leaf palmettes and razor-sharp black ink tahrir contours with a sable brush.
-          </p>
+          <p class="plate-desc">Drafting harmonic logarithmic golden spirals with constant curvature. Demonstrates executing Rumi split-leaf palmettes and razor-sharp black ink tahrir contours with a sable brush.</p>
           <div class="plate-curriculum-topics">
             <span class="topic-tag">Logarithmic Spiral</span>
             <span class="topic-tag">Rumi Split Leaves</span>
@@ -134,7 +137,7 @@
             <button class="card-btn card-btn-primary btn-zoom-plate" data-full-src="./assets/plates/plate-02-islimi.svg" type="button">
               Inspect Vector Plate
             </button>
-            <a href="./assets/videos/video-02-islimi.mp4" download="plate-02-islimi.mp4" class="card-btn card-btn-secondary">
+            <a href="./assets/videos/video-02-islimi.mp4" download="video-02-islimi.mp4" class="card-btn card-btn-secondary">
               Download Media
             </a>
           </div>
@@ -145,7 +148,7 @@
       <article class="plate-card" data-chapter="ch3">
         <div class="plate-media-wrapper">
           <video class="plate-video-player" src="./assets/videos/video-03-zarkari.mp4" controls preload="metadata" playsinline></video>
-          <img class="plate-image-preview hidden" src="./assets/plates/plate-03-zarkari.svg" alt="Plate 03: Zarkari Masterwork" data-full-src="./assets/plates/plate-03-zarkari.svg">
+          <img class="plate-image-preview hidden" src="./assets/plates/plate-03-zarkari.svg" alt="Plate III: Zarkari Masterwork" data-full-src="./assets/plates/plate-03-zarkari.svg">
           <div class="media-toggle-bar">
             <button class="media-toggle-btn btn-show-video active" type="button">Video</button>
             <button class="media-toggle-btn btn-show-image" type="button">Plate Drawing</button>
@@ -153,14 +156,12 @@
         </div>
         <div class="plate-content">
           <div class="plate-meta-row">
-            <span class="plate-lesson-tag">Chapter III • Lesson 3.1</span>
-            <span class="plate-duration">Master Video • 04:30</span>
+            <span class="plate-lesson-tag">Chapter III • Master Lesson 3.1</span>
+            <span class="plate-duration">Master Video • Live Media</span>
           </div>
-          <h2 class="plate-name">Zarkari &amp; Gilding Masterwork</h2>
+          <h2 class="plate-name">Zarkari Masterwork</h2>
           <div class="plate-arabic-label">زرکاری، سرلوح و رنگ‌گذاری لاجورد</div>
-          <p class="plate-desc">
-            The grand illuminated manuscript sarlowh (frontispiece). Applying shell gold (morakkab), agate dog-tooth burnishing for mirror gloss reflections, and grinding pure lapis lazuli mineral pigment.
-          </p>
+          <p class="plate-desc">The grand illuminated manuscript sarlowh (frontispiece). Applying shell gold (morakkab), agate dog-tooth burnishing for mirror gloss reflections, and grinding pure lapis lazuli mineral pigment.</p>
           <div class="plate-curriculum-topics">
             <span class="topic-tag">Shell Gold (Zarkari)</span>
             <span class="topic-tag">Agate Burnishing</span>
@@ -171,7 +172,7 @@
             <button class="card-btn card-btn-primary btn-zoom-plate" data-full-src="./assets/plates/plate-03-zarkari.svg" type="button">
               Inspect Vector Plate
             </button>
-            <a href="./assets/videos/video-03-zarkari.mp4" download="plate-03-zarkari.mp4" class="card-btn card-btn-secondary">
+            <a href="./assets/videos/video-03-zarkari.mp4" download="video-03-zarkari.mp4" class="card-btn card-btn-secondary">
               Download Media
             </a>
           </div>
@@ -182,7 +183,7 @@
       <article class="plate-card" data-chapter="ch4">
         <div class="plate-media-wrapper">
           <video class="plate-video-player" src="./assets/videos/video-04-charpar.mp4" controls preload="metadata" playsinline></video>
-          <img class="plate-image-preview hidden" src="./assets/plates/plate-04-charpar.png" alt="Plate 04: Charpar Motif" data-full-src="./assets/plates/plate-04-charpar.png">
+          <img class="plate-image-preview hidden" src="./assets/plates/plate-04-charpar.png" alt="Plate IV: Charpar Floral Motif" data-full-src="./assets/plates/plate-04-charpar.png">
           <div class="media-toggle-bar">
             <button class="media-toggle-btn btn-show-video active" type="button">Video</button>
             <button class="media-toggle-btn btn-show-image" type="button">Plate Drawing</button>
@@ -190,14 +191,12 @@
         </div>
         <div class="plate-content">
           <div class="plate-meta-row">
-            <span class="plate-lesson-tag">Chapter IV • Lesson 4.1</span>
+            <span class="plate-lesson-tag">Chapter IV • Master Lesson 4.1</span>
             <span class="plate-duration">Master Video • Live Media</span>
           </div>
           <h2 class="plate-name">Charpar Floral Motif</h2>
           <div class="plate-arabic-label">طرح چهارپر و حاشیه</div>
-          <p class="plate-desc">
-            Four-petal symmetrical motif (charpar) construction, axial corner quadrant ornamentation, and precision gold illumination techniques.
-          </p>
+          <p class="plate-desc">Four-petal symmetrical motif (charpar) construction, axial corner quadrant ornamentation, and precision gold illumination techniques.</p>
           <div class="plate-curriculum-topics">
             <span class="topic-tag">Charpar Motif</span>
             <span class="topic-tag">Four-Fold Symmetry</span>
@@ -208,13 +207,12 @@
             <button class="card-btn card-btn-primary btn-zoom-plate" data-full-src="./assets/plates/plate-04-charpar.png" type="button">
               Inspect Plate
             </button>
-            <a href="./assets/videos/video-04-charpar.mp4" download="plate-04-charpar.mp4" class="card-btn card-btn-secondary">
+            <a href="./assets/videos/video-04-charpar.mp4" download="video-04-charpar.mp4" class="card-btn card-btn-secondary">
               Download Media
             </a>
           </div>
         </div>
       </article>
-
     </div>
   </main>
 

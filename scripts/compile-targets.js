@@ -11,12 +11,20 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
-const PLATES = [
-  path.join(ROOT_DIR, 'assets', 'plates', 'plate-01-shamsa.png'),
-  path.join(ROOT_DIR, 'assets', 'plates', 'plate-02-islimi.png'),
-  path.join(ROOT_DIR, 'assets', 'plates', 'plate-03-zarkari.png'),
-  path.join(ROOT_DIR, 'assets', 'plates', 'plate-04-charpar.png')
-];
+const CURRICULUM_PATH = path.join(ROOT_DIR, 'assets', 'data', 'curriculum.json');
+
+let PLATES = [];
+if (fs.existsSync(CURRICULUM_PATH)) {
+  const curriculum = JSON.parse(fs.readFileSync(CURRICULUM_PATH, 'utf8'));
+  PLATES = curriculum.map(c => path.join(ROOT_DIR, 'assets', 'plates', c.imageFile));
+} else {
+  PLATES = [
+    path.join(ROOT_DIR, 'assets', 'plates', 'plate-01-shamsa.png'),
+    path.join(ROOT_DIR, 'assets', 'plates', 'plate-02-islimi.png'),
+    path.join(ROOT_DIR, 'assets', 'plates', 'plate-03-zarkari.png'),
+    path.join(ROOT_DIR, 'assets', 'plates', 'plate-04-charpar.png')
+  ];
+}
 const TARGET_OUTPUT = path.join(ROOT_DIR, 'assets', 'targets', 'targets.mind');
 const CHROME_PATH = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 

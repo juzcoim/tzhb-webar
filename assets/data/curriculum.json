@@ -1,0 +1,62 @@
+[
+  {
+    "index": 0,
+    "id": "plate-01",
+    "title": "Plate I: The Eightfold Shamsa",
+    "chapter": "Chapter I: Radial Geometry & Groundwork",
+    "chapterId": "ch1",
+    "lesson": "Master Lesson 1.1",
+    "arabic": "شمسه هشت‌پر و هندسه دایره",
+    "description": "Constructing the foundational octagram star grid using compass division. Covers parchment preparation, ground gesso layering, and burnishing geometry for 32-ray radial burst coronas.",
+    "topics": ["Radial Girih", "Octagram Star", "Gesso Ground", "Ray Corona"],
+    "imageFile": "plate-01-shamsa.png",
+    "vectorFile": "plate-01-shamsa.svg",
+    "videoFile": "video-01-shamsa.mp4",
+    "videoId": "video-shamsa"
+  },
+  {
+    "index": 1,
+    "id": "plate-02",
+    "title": "Plate II: The Biomorphic Islimi",
+    "chapter": "Chapter II: Foliation & Arabesque",
+    "chapterId": "ch2",
+    "lesson": "Master Lesson 2.1",
+    "arabic": "اسلیمی ساده، ماری و گل‌های خطایی",
+    "description": "Drafting harmonic logarithmic golden spirals with constant curvature. Demonstrates executing Rumi split-leaf palmettes and razor-sharp black ink tahrir contours with a sable brush.",
+    "topics": ["Logarithmic Spiral", "Rumi Split Leaves", "Khatai Lotus", "Tahrir Inking"],
+    "imageFile": "plate-02-islimi.png",
+    "vectorFile": "plate-02-islimi.svg",
+    "videoFile": "video-02-islimi.mp4",
+    "videoId": "video-islimi"
+  },
+  {
+    "index": 2,
+    "id": "plate-03",
+    "title": "Plate III: Zarkari Masterwork",
+    "chapter": "Chapter III: Gilding & Illumination",
+    "chapterId": "ch3",
+    "lesson": "Master Lesson 3.1",
+    "arabic": "زرکاری، سرلوح و رنگ‌گذاری لاجورد",
+    "description": "The grand illuminated manuscript sarlowh (frontispiece). Applying shell gold (morakkab), agate dog-tooth burnishing for mirror gloss reflections, and grinding pure lapis lazuli mineral pigment.",
+    "topics": ["Shell Gold (Zarkari)", "Agate Burnishing", "Lapis Lazuli", "Sarlowh Arch"],
+    "imageFile": "plate-03-zarkari.png",
+    "vectorFile": "plate-03-zarkari.svg",
+    "videoFile": "video-03-zarkari.mp4",
+    "videoId": "video-zarkari"
+  },
+  {
+    "index": 3,
+    "id": "plate-04",
+    "title": "Plate IV: Charpar Floral Motif",
+    "chapter": "Chapter IV: Floral Geometry & Cornerpieces",
+    "chapterId": "ch4",
+    "lesson": "Master Lesson 4.1",
+    "arabic": "طرح چهارپر و حاشیه",
+    "description": "Four-petal symmetrical motif (charpar) construction, axial corner quadrant ornamentation, and precision gold illumination techniques.",
+    "topics": ["Charpar Motif", "Four-Fold Symmetry", "Border Design", "Gold Embellishment"],
+    "imageFile": "plate-04-charpar.png",
+    "vectorFile": null,
+    "videoFile": "video-04-charpar.mp4",
+    "videoId": "video-charpar"
+  }
+]
